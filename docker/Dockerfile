@@ -127,6 +127,4 @@ LABEL org.opencontainers.image.source=$REPOSITORY
 LABEL org.opencontainers.image.description="RoadRunner Monitor"
 LABEL org.opencontainers.image.licenses=MIT
 
-ARG ROADRUNNER_CONFIG=.rr-prod.yaml
-
-CMD ./rr serve -c $ROADRUNNER_CONFIG
+CMD ./rr serve -c .rr-prod.yaml
