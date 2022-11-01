@@ -1,6 +1,5 @@
 ARG APP_IMAGE=spiralscout/php81-grpc:1.0.0
 ARG ROAD_RUNNER_IMAGE=2.11.4
-ARG ROADRUNNER_CONFIG=.rr-prod.yaml
 
 # Build rr binary
 FROM spiralscout/roadrunner:$ROAD_RUNNER_IMAGE as builder
@@ -127,5 +126,7 @@ EXPOSE 8080
 LABEL org.opencontainers.image.source=$REPOSITORY
 LABEL org.opencontainers.image.description="RoadRunner Monitor"
 LABEL org.opencontainers.image.licenses=MIT
+
+ARG ROADRUNNER_CONFIG=.rr-prod.yaml
 
 CMD ./rr serve -c $ROADRUNNER_CONFIG
