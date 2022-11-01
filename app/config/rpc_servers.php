@@ -7,7 +7,7 @@ $default = env('DEFAULT_RPC_SERVER', 'default');
 
 if ($default === 'default') {
     $servers[$default] = [
-        'address' => env('DEFAULT_RPC_SERVER_ADDRESS'),
+        'address' => env('DEFAULT_RPC_SERVER_ADDRESS', 'tcp://127.0.0.1:6001'),
     ];
 }
 
