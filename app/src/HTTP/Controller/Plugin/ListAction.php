@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Plugin;
+namespace App\HTTP\Controller\Plugin;
 
 use App\CQRS\Query\Informer\ListQuery;
 use App\HTTP\Request\Plugin\ListRequest;

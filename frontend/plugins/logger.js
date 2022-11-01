@@ -4,24 +4,22 @@ export class Logger {
   }
 
   debug(...content) {
-    if (this.mode === 'development') {
-      this.__log('success', ...content)
-    }
+    this.__log('success', ...content)
   }
 
   error(...content) {
-    if (this.mode === 'development') {
-      this.__log('error', ...content)
-    }
+    this.__log('error', ...content)
   }
 
   info(...content) {
-    if (this.mode === 'development') {
-      this.__log('info', ...content)
-    }
+    this.__log('info', ...content)
   }
 
   __log(type, ...content) {
+    if (this.mode !== 'development') {
+      return
+    }
+
     switch (type) {
       case 'success':
         console.info(...content)

@@ -39,6 +39,10 @@ export default {
     '@nuxtjs/axios',
     'bootstrap-vue/nuxt',
   ],
+  bootstrapVue: {
+    icons: true,
+    components: ['BDropdown', 'BDropdownItem']
+  },
 
   axios: {
     baseURL: process.env.BASE_URL

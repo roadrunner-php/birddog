@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Service;
+namespace App\HTTP\Controller\Service;
 
 use App\CQRS\Command\Service\RestartCommand;
 use App\HTTP\Request\Service\CommandRequest;

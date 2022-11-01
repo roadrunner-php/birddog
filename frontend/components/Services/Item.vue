@@ -2,18 +2,20 @@
   <div class="card">
     <div class="card-header">
       <div class="d-flex justify-content-between align-items-start">
-        <h6>
-          <strong>{{ name }}</strong>
-          <br/>
+        <div>
+          <h6 class="d-flex align-items-center">
+            <b-icon icon="hdd-network" font-scale="1.5" class="mr-3" /> <strong>{{ name }}</strong>
+          </h6>
           <span v-if="command" class="badge border bg-light mt-2">Command: <strong>{{ command }}</strong></span>
-        </h6>
-        <div class="spinner-border text-success" style="width: 20px; height: 20px" v-if="hasStatus"></div>
+        </div>
       </div>
     </div>
-    <ServicesStatus :service="status" :key="status.pid" v-for="status in statuses"/>
-    <div class="card-footer">
+    <div class="list-group list-group-flush" v-if="hasStatuses">
+      <ServicesStatus :service="status" :key="status.pid" v-for="status in statuses"/>
+    </div>
+    <div class="card-footer p-2">
       <button type="button" class="btn btn-sm btn-danger ml-2" @click.prevent="restart">
-        Restart
+        <b-icon icon="arrow-clockwise" /> Restart
       </button>
     </div>
   </div>
@@ -48,7 +50,7 @@ export default {
     }
   },
   computed: {
-    hasStatus() {
+    hasStatuses() {
       return this.statuses.length > 0
     },
     command() {

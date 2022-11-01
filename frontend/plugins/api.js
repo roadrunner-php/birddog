@@ -4,7 +4,8 @@ export default function (ctx, inject) {
   const api = new class Api {
     get servers() {
       return {
-        list: apiMethods.serversList(ctx)
+        list: apiMethods.serversList(ctx),
+        register: apiMethods.serverRegister(ctx)
       }
     }
 

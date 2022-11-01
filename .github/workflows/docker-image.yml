@@ -40,4 +40,4 @@ jobs:
           build-args:
             APP_VERSION=${{ steps.previoustag.outputs.tag }}
           tags:
-            ghcr.io/roadrunner-server/monitor:latest, ghcr.io/roadrunner-server/monitor:${{ steps.previoustag.outputs.tag }}
+            ghcr.io/roadrunner-server/birddog:latest, ghcr.io/roadrunner-server/birddog:${{ steps.previoustag.outputs.tag }}

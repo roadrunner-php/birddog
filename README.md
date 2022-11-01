@@ -1,17 +1,28 @@
-# RoadRunner Monitor
+# Birddog
 
-The RoadRunner Monitor is a tool for monitoring [workers](https://roadrunner.dev/docs/php-rpc/2.x/en), services
+Birddog is a free tool for monitoring [workers](https://roadrunner.dev/docs/php-rpc/2.x/en), services
 and [jobs](https://roadrunner.dev/docs/plugins-jobs/2.x/en) of a RoadRunner instance.
 
 ## Installation
 
 ```bash
 docker run \
-    --pull always \
     -p 8080:8080 \
     -p 3000:3000 \
     --env DEFAULT_RPC_SERVER_ADDRESS=tcp://127.0.0.1:6001 \
-    ghcr.io/roadrunner-server/monitor:latest
+    ghcr.io/roadrunner-server/birddog:latest
+```
+
+You can also define multiple RPC servers via env variables:
+
+```bash
+docker run \
+    -p 8080:8080 \
+    -p 3000:3000 \
+    --env DEFAULT_RPC_SERVER=foo \
+    --env RPC_SERVER_FOO=tcp://127.0.0.1:6001 \ 
+    --env RPC_SERVER_BAR=tcp://127.0.0.1:6001 \
+    ghcr.io/roadrunner-server/birddog:latest
 ```
 
 or using docker compose:
@@ -19,15 +30,15 @@ or using docker compose:
 ```yaml
 version: "3.7"
 
-rr-php:
-    build:
-        dockerfile: ./docker/php/Dockerfile
-    command: rr serve
-    restart: on-failure
-
 services:
+    rr-php:
+        build:
+            dockerfile: ./docker/php/Dockerfile
+        command: rr serve
+        restart: on-failure
+
     monitor:
-        image: ghcr.io/roadrunner-server/monitor:0.0.8
+        image: ghcr.io/roadrunner-server/birddog:0.0.8
         ports:
             - "8080:8080"
             - "3000:3000"
@@ -38,7 +49,7 @@ services:
 
 ## Configuration
 
-There ENV varaibles that can be used to configure the monitor:
+There ENV variables that can be used to configure the Birddog:
 
 ```dotenv
 # Default RR RPC server address
@@ -46,4 +57,9 @@ DEFAULT_RPC_SERVER_ADDRESS=tcp://127.0.0.1:6001
 
 # Default Monitor API url
 BASE_URL=http://127.0.0.1:8080
+
+# Servers definition
+# You can define multiple servers using the following format. Every server should start with RPC_SERVER_ prefix.
+RPC_SERVER_FOO=tcp://127.0.0.1:6001
+RPC_SERVER_BAR=tcp://127.0.0.1:6001
 ```

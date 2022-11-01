@@ -19,10 +19,10 @@
     </div>
     <div class="card-footer">
       <button type="button" class="btn btn-sm btn-warning ml-2" @click="pause()" v-if="pipeline.ready">
-        Pause
+        <b-icon icon="pause-circle" /> Pause
       </button>
       <button type="button" class="btn btn-sm btn-success ml-2" @click="resume()" v-else>
-        Consume
+        <b-icon icon="power" /> Consume
       </button>
     </div>
   </div>

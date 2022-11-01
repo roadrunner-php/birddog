@@ -19,8 +19,12 @@ http:
             exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
             max_age: 600
     pool:
-        num_workers: 2
+        num_workers: 3
 
 service:
     frontend:
         command: sh spa.sh
+
+logs:
+    mode: production
+    level: error

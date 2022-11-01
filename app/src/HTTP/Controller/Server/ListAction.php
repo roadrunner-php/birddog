@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Server;
+namespace App\HTTP\Controller\Server;
 
 use App\CQRS\Query\Server\ListQuery;
 use App\RPC\ServersConfig;

@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+$servers = [];
+$default = env('DEFAULT_RPC_SERVER', 'default');
+
+if ($default === 'default') {
+    $servers[$default] = [
+        'address' => env('DEFAULT_RPC_SERVER_ADDRESS'),
+    ];
+}
+
 /**
  * @return array{
  *     default: non-empty-string|null,
@@ -11,10 +20,6 @@ declare(strict_types=1);
  * }
  */
 return [
-    'default' => env('DEFAULT_RPC_SERVER', 'default'),
-    'servers' => [
-        'default' => [
-           'address' => env('DEFAULT_RPC_SERVER_ADDRESS', 'tcp://127.0.0.1:6001'),
-        ]
-    ],
+    'default' => $default,
+    'servers' => $servers,
 ];

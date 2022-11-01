@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\TCP;
+namespace App\HTTP\Controller\TCP;
 
 use App\CQRS\Command\TCP\CloseCommand;
 use App\HTTP\Request\TCP\CloseConnectionRequest;

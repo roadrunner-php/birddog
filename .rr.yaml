@@ -19,10 +19,11 @@ http:
             exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
             max_age: 600
     pool:
-        num_workers: 2
+        num_workers: 1
 
 service:
     frontend:
         command: "npm run dev"
         env:
             BASE_URL: http://127.0.0.1:8080
+

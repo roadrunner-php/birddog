@@ -2,10 +2,8 @@
   <div class="card mb-4 shadow-sm">
     <div class="card-header d-flex justify-content-between">
       <div class="d-flex align-items-center">
-        <div class="mr-3">
-          <UIIconsPlugin style="width: 25px; height: 25px" />
-        </div>
-        <h5 class="mb-0">
+        <b-icon icon="puzzle" font-scale="1.4"/>
+        <h5 class="ml-3 mb-0">
           <NuxtLink :to="`/plugin/${plugin.name}`" v-if="hasSettings()">
             {{ plugin.name.capitalize() }} plugin
           </NuxtLink>
@@ -16,9 +14,6 @@
         <span class="badge badge-light border mr-2">
           Workers: <strong>{{ plugin.workers.length }}</strong>
         </span>
-        <button type="button" class="btn btn-sm btn-danger ml-2" @click="reset" v-if="plugin.is_ressetable">
-          Restart
-        </button>
       </div>
     </div>
 
@@ -28,6 +23,12 @@
     <UIWarningMessage v-else>
       There are no run workers.
     </UIWarningMessage>
+    <div class="card-footer p-2" v-if="plugin.is_ressetable">
+      <button type="button" class="btn btn-sm btn-danger ml-2" @click="reset">
+        <b-icon icon="arrow-clockwise"/>
+        Restart
+      </button>
+    </div>
   </div>
 </template>
 

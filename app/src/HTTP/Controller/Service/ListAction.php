@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Service;
+namespace App\HTTP\Controller\Service;
 
 use App\CQRS\Query\Service\ListQuery;
 use App\HTTP\Request\Service\ListRequest;

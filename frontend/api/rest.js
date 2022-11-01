@@ -7,6 +7,8 @@ const serversList = ({$axios}) => async () => $axios.$get('/servers')
     }
   })
 
+const serverRegister = ({$axios}) => async (name, address) => $axios.$post('/server/register', {name, address})
+
 // Plugins
 const pluginsList = ({$axios}) => async (server) => $axios.$get(`/plugins?server=${server}`)
   .then((response) => response.data.plugins)
@@ -50,5 +52,6 @@ export default {
   servicesList,
   servicesTerminate,
   servicesRestart,
-  serviceStatus
+  serviceStatus,
+  serverRegister
 }

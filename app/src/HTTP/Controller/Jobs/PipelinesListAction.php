@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Jobs;
+namespace App\HTTP\Controller\Jobs;
 
 use App\CQRS\Query\Jobs\PipelineListQuery;
 use App\HTTP\Request\Jobs\ListRequest;

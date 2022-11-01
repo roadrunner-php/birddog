@@ -1,13 +1,15 @@
 <template>
   <div>
     <div v-if="hasServices" class="list-group">
-      <h4 class="mb-4">Services</h4>
+      <h4 class="mb-4 d-flex align-items-center">
+        <b-icon icon="puzzle" font-scale="1.4" class="mr-3"/> Service plugin
+      </h4>
 
       <ServicesItem
         :name="name"
         :server="server"
         :key="name"
-        v-for="name in sortedServices"/>
+        v-for="name in sortedServices" class="mb-4 shadow-sm"/>
     </div>
     <UIWarningMessage v-else>
       There are no available services on <strong>{{ server }}</strong> server.
@@ -48,7 +50,7 @@ export default {
     },
     sortedServices() {
       return this.services.sort(
-        (a, b) => (a.name.substr(1) > b.name.substr(1)) ? -1 : ((b.name.substr(1) > a.name.substr(1) ? 1 : 0))
+        (a, b) => (a.substr(1) > b.substr(1)) ? -1 : ((b.substr(1) > a.substr(1) ? 1 : 0))
       )
     }
   },
