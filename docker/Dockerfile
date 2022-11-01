@@ -112,6 +112,7 @@ RUN git clone $REPOSITORY /app
 WORKDIR /app
 RUN composer config --no-plugins allow-plugins.spiral/composer-publish-plugin false
 RUN composer install
+RUN vendor/bin/rr get-binary
 
 WORKDIR /app/frontend
 ENV NODE_OPTIONS=--openssl-legacy-provider
