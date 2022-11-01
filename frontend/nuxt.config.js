@@ -2,11 +2,11 @@ export default {
   ssr: false,
 
   env: {
-    BASE_URL: process.env.BASE_URL || 'http://127.0.0.1:8080',
+    API_URL: process.env.API_URL || 'http://127.0.0.1:8080',
   },
 
   head: {
-    title: 'RoadRunner monitor',
+    title: 'Birddog',
     htmlAttrs: {
       lang: 'en'
     },
@@ -45,7 +45,7 @@ export default {
   },
 
   axios: {
-    baseURL: process.env.BASE_URL
+    baseURL: process.env.API_URL
     // proxy: true
   },
 

@@ -44,7 +44,7 @@ services:
             - "3000:3000"
         environment:
             DEFAULT_RPC_SERVER_ADDRESS: tcp://rr-php:6001
-            BASE_URL: http://127.0.0.1:8080
+            API_URL: http://127.0.0.1:8080
 ```
 
 ## Configuration
@@ -52,11 +52,15 @@ services:
 There ENV variables that can be used to configure the Birddog:
 
 ```dotenv
+# Birddog API server URL
+API_URL=http://127.0.0.1:8080
+
 # Default RR RPC server address
+# It works only if you won't relace DEFAULT_RPC_SERVER ENV variable
 DEFAULT_RPC_SERVER_ADDRESS=tcp://127.0.0.1:6001
 
-# Default Monitor API url
-BASE_URL=http://127.0.0.1:8080
+# Default RPC server name 
+DEFAULT_RPC_SERVER=foo
 
 # Servers definition
 # You can define multiple servers using the following format. Every server should start with RPC_SERVER_ prefix.

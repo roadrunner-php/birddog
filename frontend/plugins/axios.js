@@ -1,5 +1,5 @@
 export default function ({$axios, $logger, redirect}) {
-  $axios.setBaseURL(process.env.BASE_URL)
+  $axios.setBaseURL(process.env.API_URL)
 
   $axios.onRequest(config => {
     $logger.debug(`Making request: ${config.url}`, config)
