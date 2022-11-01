@@ -40,4 +40,4 @@ jobs:
           build-args:
             APP_VERSION=${{ steps.previoustag.outputs.tag }}
           tags:
-            ${{ secrets.GHCR_LOGIN }}/monitor:latest, ${{ secrets.GHCR_LOGIN }}/monitor:${{ steps.previoustag.outputs.tag }}
+            roadrunner-server/monitor:latest, roadrunner-server/monitor:${{ steps.previoustag.outputs.tag }}
