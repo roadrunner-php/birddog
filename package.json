@@ -1,7 +1,6 @@
 {
   "name": "RoadRunner monitor",
   "scripts": {
-    "dev": "cd frontend && npm run dev",
-    "start": "cd frontend && npm run start"
+    "dev": "cd frontend && npm run dev"
   }
 }
