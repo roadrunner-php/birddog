@@ -3,10 +3,6 @@ ARG ROAD_RUNNER_IMAGE=2.11.4
 ARG ROADRUNNER_CONFIG=.rr-prod.yaml
 ARG REPOSITORY=https://github.com/roadrunner-server/monitor
 
-LABEL org.opencontainers.image.source=$REPOSITORY
-LABEL org.opencontainers.image.description="RoadRunner Monitor"
-LABEL org.opencontainers.image.licenses=MIT
-
 # Build rr binary
 FROM spiralscout/roadrunner:$ROAD_RUNNER_IMAGE as builder
 FROM $APP_IMAGE
@@ -122,8 +118,11 @@ RUN npm run build
 
 WORKDIR /app
 
-
 EXPOSE 3000
 EXPOSE 8080
+
+LABEL org.opencontainers.image.source=$REPOSITORY
+LABEL org.opencontainers.image.description="RoadRunner Monitor"
+LABEL org.opencontainers.image.licenses=MIT
 
 CMD ./rr serve -c $ROADRUNNER_CONFIG
