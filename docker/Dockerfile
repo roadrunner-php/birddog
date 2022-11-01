@@ -104,13 +104,14 @@ ARG APP_VERSION=v1.0
 ENV HOST=0.0.0.0
 ENV BASE_URL=http://127.0.0.1:8080
 ENV COMPOSER_ALLOW_SUPERUSER=1
-
 RUN git clone https://github.com/roadrunner-server/monitor /app
 
 WORKDIR /app
+RUN composer config --no-plugins allow-plugins.spiral/composer-publish-plugin false
 RUN composer install
 
 WORKDIR /app/frontend
+ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN npm install
 RUN npm run build
 
