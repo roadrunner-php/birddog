@@ -1,0 +1,533 @@
+{
+    "info": {
+        "_postman_id": "f221ab6c-498a-4824-bbd4-4be80da99581",
+        "name": "RoadRunner Monitor",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Jobs",
+            "item": [
+                {
+                    "name": "jobs.list",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/jobs/pipelines?server=cinema",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "jobs",
+                                "pipelines"
+                            ],
+                            "query": [
+                                {
+                                    "key": "server",
+                                    "value": "cinema"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "jobs.pause",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "server",
+                                    "value": "cinema",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "pipeline",
+                                    "value": "test",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/jobs/pipeline/pause",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "jobs",
+                                "pipeline",
+                                "pause"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "jobs.resume",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "server",
+                                    "value": "cinema",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "pipeline",
+                                    "value": "test",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/jobs/pipeline/resume",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "jobs",
+                                "pipeline",
+                                "resume"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Plugin",
+            "item": [
+                {
+                    "name": "plugin.list",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/plugins?server=cinema",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "plugins"
+                            ],
+                            "query": [
+                                {
+                                    "key": "server",
+                                    "value": "cinema"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "plugin.workers",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/plugin/workers?server=cinema&plugin=jobs",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "plugin",
+                                "workers"
+                            ],
+                            "query": [
+                                {
+                                    "key": "server",
+                                    "value": "cinema"
+                                },
+                                {
+                                    "key": "plugin",
+                                    "value": "jobs"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "plugin.reset",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "server",
+                                    "value": "cinema",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "plugin",
+                                    "value": "http",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/plugin/reset",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "plugin",
+                                "reset"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "plugin.jobs",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/plugin/jobs?server=cinema&plugin=jobs",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "plugin",
+                                "jobs"
+                            ],
+                            "query": [
+                                {
+                                    "key": "server",
+                                    "value": "cinema"
+                                },
+                                {
+                                    "key": "plugin",
+                                    "value": "jobs"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Server",
+            "item": [
+                {
+                    "name": "Servers.list",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/servers",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "servers"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Service",
+            "item": [
+                {
+                    "name": "Service.list",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/services?server=payment",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "services"
+                            ],
+                            "query": [
+                                {
+                                    "key": "server",
+                                    "value": "payment"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Service.status",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/service/status?server=payment&service=some_service_1",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "service",
+                                "status"
+                            ],
+                            "query": [
+                                {
+                                    "key": "server",
+                                    "value": "payment"
+                                },
+                                {
+                                    "key": "service",
+                                    "value": "some_service_1"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Service.restart",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "server",
+                                    "value": "payment",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "service",
+                                    "value": "some_service_1",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/service/restart",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "service",
+                                "restart"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Service.terminate",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "server",
+                                    "value": "payment",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "service",
+                                    "value": "some_service_1",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/service/terminate",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "service",
+                                "terminate"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Service.create",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "server",
+                                    "value": "payment",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "name",
+                                    "value": "service_name",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "command",
+                                    "value": "php app.php",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "process_num",
+                                    "value": "1",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "exec_timeout",
+                                    "value": "0",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "remain_after_exit",
+                                    "value": "false",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "restart_sec",
+                                    "value": "30",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/service/create",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "service",
+                                "create"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "TCP",
+            "item": [
+                {
+                    "name": "tcp.close",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "uuid",
+                                    "value": "47e26ba6-9ffb-4971-8b71-285de9db32f4",
+                                    "type": "default"
+                                },
+                                {
+                                    "key": "server",
+                                    "value": "cinema",
+                                    "type": "default"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://127.0.0.1:8070/tcp/close",
+                            "protocol": "http",
+                            "host": [
+                                "127",
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "port": "8070",
+                            "path": [
+                                "tcp",
+                                "close"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ]
+}
