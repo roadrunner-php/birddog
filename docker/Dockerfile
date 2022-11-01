@@ -1,7 +1,6 @@
 ARG APP_IMAGE=spiralscout/php81-grpc:1.0.0
 ARG ROAD_RUNNER_IMAGE=2.11.4
 ARG ROADRUNNER_CONFIG=.rr-prod.yaml
-ARG REPOSITORY=https://github.com/roadrunner-server/monitor
 
 # Build rr binary
 FROM spiralscout/roadrunner:$ROAD_RUNNER_IMAGE as builder
@@ -105,6 +104,9 @@ ARG APP_VERSION=v1.0
 ENV HOST=0.0.0.0
 ENV BASE_URL=http://127.0.0.1:8080
 ENV COMPOSER_ALLOW_SUPERUSER=1
+
+ARG REPOSITORY=https://github.com/roadrunner-server/monitor
+
 RUN git clone $REPOSITORY /app
 
 WORKDIR /app
