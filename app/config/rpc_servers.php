@@ -11,11 +11,10 @@ declare(strict_types=1);
  * }
  */
 return [
-    'default' => env('DEFAULT_RPC_SERVER', 'local'),
+    'default' => env('DEFAULT_RPC_SERVER', 'default'),
     'servers' => [
-        //Address of Roadrunner RPC server
-        'local' => [
-           'address' => 'tcp://127.0.0.1:6001',
+        'default' => [
+           'address' => env('DEFAULT_RPC_SERVER_ADDRESS', 'tcp://127.0.0.1:6001'),
         ]
     ],
 ];
