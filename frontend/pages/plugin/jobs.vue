@@ -13,12 +13,17 @@
       </ol>
     </nav>
 
-    <JobsPipelines :server="server" />
+    <JobsPipelines :server="server"/>
   </div>
 </template>
 
 <script>
 export default {
+  head() {
+    return {
+      title: `Jobs plugin - ${this.server}`
+    }
+  },
   computed: {
     server() {
       return this.$store.getters['servers/getDefaultServer']

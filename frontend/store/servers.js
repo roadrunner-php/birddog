@@ -10,6 +10,7 @@ export const mutations = {
   },
   setDefaultServer(state, server) {
     state.defaultServer = server
+    this.dispatch('config/fetchConfig', server)
   }
 }
 

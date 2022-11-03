@@ -27,12 +27,16 @@ export default {
     { src: '~/plugins/logger.js' },
     { src: '~/plugins/axios.js' },
     { src: '~/plugins/api.js' },
+    { src: '~/plugins/bootstrap.js' },
   ],
 
   components: true,
 
   buildModules: [
-    '@nuxtjs/moment'
+    '@nuxtjs/moment',
+    ['nuxt-highlightjs', {
+      style: 'obsidian'
+    }]
   ],
 
   modules: [

@@ -1,10 +1,6 @@
 <template>
   <div>
     <div v-if="hasServices" class="list-group">
-      <h4 class="mb-4 d-flex align-items-center">
-        <b-icon icon="puzzle" font-scale="1.4" class="mr-3"/> Service plugin
-      </h4>
-
       <ServicesItem
         :name="name"
         :server="server"

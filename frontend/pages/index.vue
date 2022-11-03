@@ -1,6 +1,6 @@
 <template>
   <div v-if="server">
-    <PluginsList :server="server" />
+    <PluginsList :server="server"/>
   </div>
 </template>
 

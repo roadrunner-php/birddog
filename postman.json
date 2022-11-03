@@ -14,7 +14,7 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/jobs/pipelines?server=cinema",
+                            "raw": "{{server}}/jobs/pipelines?server=default",
                             "host": [
                                 "{{server}}"
                             ],
@@ -25,7 +25,7 @@
                             "query": [
                                 {
                                     "key": "server",
-                                    "value": "cinema"
+                                    "value": "default"
                                 }
                             ]
                         }
@@ -42,7 +42,7 @@
                             "formdata": [
                                 {
                                     "key": "server",
-                                    "value": "cinema",
+                                    "value": "default",
                                     "type": "default"
                                 },
                                 {
@@ -76,7 +76,7 @@
                             "formdata": [
                                 {
                                     "key": "server",
-                                    "value": "cinema",
+                                    "value": "default",
                                     "type": "default"
                                 },
                                 {
@@ -111,7 +111,7 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/plugins?server=cinema",
+                            "raw": "{{server}}/plugins?server=default",
                             "host": [
                                 "{{server}}"
                             ],
@@ -121,7 +121,7 @@
                             "query": [
                                 {
                                     "key": "server",
-                                    "value": "cinema"
+                                    "value": "default"
                                 }
                             ]
                         }
@@ -134,7 +134,7 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/plugin/workers?server=cinema&plugin=jobs",
+                            "raw": "{{server}}/plugin/workers?server=default&plugin=jobs",
                             "host": [
                                 "{{server}}"
                             ],
@@ -145,7 +145,7 @@
                             "query": [
                                 {
                                     "key": "server",
-                                    "value": "cinema"
+                                    "value": "default"
                                 },
                                 {
                                     "key": "plugin",
@@ -166,7 +166,7 @@
                             "formdata": [
                                 {
                                     "key": "server",
-                                    "value": "cinema",
+                                    "value": "default",
                                     "type": "default"
                                 },
                                 {
@@ -195,7 +195,7 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/plugin/jobs?server=cinema&plugin=jobs",
+                            "raw": "{{server}}/plugin/jobs?server=default&plugin=jobs",
                             "host": [
                                 "{{server}}"
                             ],
@@ -206,7 +206,7 @@
                             "query": [
                                 {
                                     "key": "server",
-                                    "value": "cinema"
+                                    "value": "default"
                                 },
                                 {
                                     "key": "plugin",
@@ -283,7 +283,7 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/services?server=payment",
+                            "raw": "{{server}}/services?server=default",
                             "host": [
                                 "{{server}}"
                             ],
@@ -293,7 +293,7 @@
                             "query": [
                                 {
                                     "key": "server",
-                                    "value": "payment"
+                                    "value": "default"
                                 }
                             ]
                         }
@@ -306,7 +306,7 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/service/status?server=payment&service=some_service_1",
+                            "raw": "{{server}}/service/status?server=default&service=some_service_1",
                             "host": [
                                 "{{server}}"
                             ],
@@ -317,7 +317,7 @@
                             "query": [
                                 {
                                     "key": "server",
-                                    "value": "payment"
+                                    "value": "default"
                                 },
                                 {
                                     "key": "service",
@@ -338,7 +338,7 @@
                             "formdata": [
                                 {
                                     "key": "server",
-                                    "value": "payment",
+                                    "value": "default",
                                     "type": "text"
                                 },
                                 {
@@ -371,7 +371,7 @@
                             "formdata": [
                                 {
                                     "key": "server",
-                                    "value": "payment",
+                                    "value": "default",
                                     "type": "text"
                                 },
                                 {
@@ -404,7 +404,7 @@
                             "formdata": [
                                 {
                                     "key": "server",
-                                    "value": "payment",
+                                    "value": "default",
                                     "type": "text"
                                 },
                                 {
@@ -472,7 +472,7 @@
                                 },
                                 {
                                     "key": "server",
-                                    "value": "cinema",
+                                    "value": "default",
                                     "type": "default"
                                 }
                             ]
@@ -485,6 +485,34 @@
                             "path": [
                                 "tcp",
                                 "close"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Config",
+            "item": [
+                {
+                    "name": "Config.get",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{server}}/config?server=default",
+                            "host": [
+                                "{{server}}"
+                            ],
+                            "path": [
+                                "config"
+                            ],
+                            "query": [
+                                {
+                                    "key": "server",
+                                    "value": "default"
+                                }
                             ]
                         }
                     },

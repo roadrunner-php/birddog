@@ -24,6 +24,6 @@ http:
 service:
     frontend:
         command: "npm run dev"
-        env:
-            BASE_URL: http://127.0.0.1:8080
 
+metrics:
+    address: localhost:2112

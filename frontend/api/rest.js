@@ -9,12 +9,19 @@ const serversList = ({$axios}) => async () => $axios.$get('/servers')
 
 const serverRegister = ({$axios}) => async (name, address) => $axios.$post('/server/register', {name, address})
 
+// Config
+const configGet = ({$axios}) => async (server) => $axios.$get(`/config?server=${server}`)
+  .then((response) => response)
+
 // Plugins
 const pluginsList = ({$axios}) => async (server) => $axios.$get(`/plugins?server=${server}`)
   .then((response) => response.data.plugins)
 
 const pluginReset = ({$axios}) => async (server, plugin) => $axios.$post(`/plugin/reset`, {server, plugin})
   .then((response) => response.status)
+
+const pluginWorkers = ({$axios}) => async (server, plugin) => $axios.$get(`/plugin/workers?server=${server}&plugin=${plugin}`)
+  .then((response) => response.data.workers || [])
 
 // Jobs
 const jobsPipelines = ({$axios}) => async (server) => $axios.$get(`/jobs/pipelines?server=${server}`)
@@ -45,6 +52,7 @@ const servicesRestart = ({$axios}) => async (server, service) => $axios.$post(`/
 export default {
   serversList,
   pluginsList,
+  pluginWorkers,
   pluginReset,
   jobsPipelines,
   jobsPipelinePause,
@@ -53,5 +61,6 @@ export default {
   servicesTerminate,
   servicesRestart,
   serviceStatus,
-  serverRegister
+  serverRegister,
+  configGet
 }

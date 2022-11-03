@@ -9,9 +9,16 @@ export default function (ctx, inject) {
       }
     }
 
+    get config() {
+      return {
+        get: apiMethods.configGet(ctx)
+      }
+    }
+
     get plugins() {
       return {
         list: apiMethods.pluginsList(ctx),
+        workers: apiMethods.pluginWorkers(ctx),
         reset: apiMethods.pluginReset(ctx)
       }
     }

@@ -1,15 +1,20 @@
 <template>
   <div class="card mb-4 shadow-sm">
     <div class="card-header d-flex justify-content-between">
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center" v-if="showLink">
         <b-icon icon="puzzle" font-scale="1.4"/>
         <h5 class="ml-3 mb-0">
           <NuxtLink :to="`/plugin/${plugin.name}`" v-if="hasSettings()">
-            {{ plugin.name.capitalize() }} plugin
+            {{ pluginName }} plugin
           </NuxtLink>
-          <span v-else>{{ plugin.name.capitalize() }} plugin</span>
+          <span v-else>
+            {{ pluginName }} plugin
+          </span>
         </h5>
       </div>
+      <span v-else>
+          Workers
+      </span>
       <div class="d-flex align-items-center">
         <span class="badge badge-light border mr-2">
           Workers: <strong>{{ plugin.workers.length }}</strong>
@@ -36,7 +41,11 @@
 export default {
   props: {
     server: String,
-    plugin: Object
+    plugin: Object,
+    showLink: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {
@@ -57,6 +66,9 @@ export default {
     }
   },
   computed: {
+    pluginName() {
+      return this.plugin.name.capitalize()
+    },
     hasWorkers() {
       return this.plugin.workers.length > 0
     },

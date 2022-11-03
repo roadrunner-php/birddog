@@ -33,9 +33,6 @@
 
 <script>
 export default {
-  async fetch() {
-    await this.$store.dispatch('servers/fetchServers')
-  },
   methods: {
     selectServer(server) {
       this.$store.commit('servers/setDefaultServer', server)

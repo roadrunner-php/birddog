@@ -1,5 +1,5 @@
 <template>
-  <div v-if="server">
+  <div>
     <nav aria-label="breadcrumb" class="mb-4">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">
@@ -8,31 +8,25 @@
           </NuxtLink>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
-          <strong>Service</strong> plugin
+          Config
         </li>
       </ol>
     </nav>
 
-    <h4 class="mb-4 d-flex align-items-center">
-      <b-icon icon="puzzle" font-scale="1.4" class="mr-3"/> Service plugin
+    <h4 class="d-flex align-items-center">
+      <b-icon icon="braces" font-scale="1.4" class="mr-3"/> Server config
     </h4>
 
-    <ServicesList :server="server" />
+    <UICode lang="json" v-if="config.version || false">{{ config }}</UICode>
   </div>
 </template>
 
 <script>
 export default {
-  head() {
-    return {
-      title: `Service plugin - ${this.server}`
-    }
-  },
   computed: {
-    server() {
-      return this.$store.getters['servers/getDefaultServer']
+    config() {
+      return this.$store.getters['config/getConfig']
     }
   }
 }
 </script>
-
