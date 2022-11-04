@@ -40,7 +40,7 @@ services:
         restart: on-failure
 
     monitor:
-        image: ghcr.io/roadrunner-server/birddog:0.0.8
+        image: ghcr.io/roadrunner-server/birddog:latest
         ports:
             - "8080:8080"
             - "3000:3000"
