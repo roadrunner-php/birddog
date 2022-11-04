@@ -1,5 +1,5 @@
 <template>
-  <div v-if="config.http">
+  <div v-if="hasConfig && config.http">
     <div class="card">
       <div class="card-header">Config</div>
       <div class="list-group">
@@ -29,6 +29,9 @@ export default {
   computed: {
     config() {
       return this.$store.getters['config/getConfig']
+    },
+    hasConfig() {
+      return this.$store.getters['config/hasConfig']
     }
   }
 }

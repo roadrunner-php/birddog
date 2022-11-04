@@ -24,10 +24,10 @@ export default {
   css: [],
 
   plugins: [
-    { src: '~/plugins/logger.js' },
-    { src: '~/plugins/axios.js' },
-    { src: '~/plugins/api.js' },
-    { src: '~/plugins/bootstrap.js' },
+    {src: '~/plugins/logger.js'},
+    {src: '~/plugins/axios.js'},
+    {src: '~/plugins/api.js'},
+    {src: '~/plugins/bootstrap.js'},
   ],
 
   components: true,
@@ -36,13 +36,22 @@ export default {
     '@nuxtjs/moment',
     ['nuxt-highlightjs', {
       style: 'obsidian'
-    }]
+    }],
+    '@nuxtjs/toast',
   ],
 
   modules: [
     '@nuxtjs/axios',
     'bootstrap-vue/nuxt',
   ],
+
+  toast: {
+    position: 'top-center',
+    duration: 3000,
+    closeOnSwipe: true,
+    theme: "bubble"
+  },
+
   bootstrapVue: {
     icons: true,
     components: ['BDropdown', 'BDropdownItem']

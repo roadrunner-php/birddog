@@ -1,5 +1,5 @@
 export const state = () => ({
-  config: {},
+  config: null,
 })
 
 export const mutations = {
@@ -12,11 +12,18 @@ export const getters = {
   getConfig(state) {
     return state.config
   },
+  hasConfig(state) {
+    return state.config !== null
+  }
 }
 
 export const actions = {
   async fetchConfig({commit}, server) {
-    const config = await this.$api.config.get(server)
-    commit('setConfig', config || {})
+    try {
+      const config = await this.$api.config.get(server)
+      commit('setConfig', config || {})
+    } catch {
+      // Not supports
+    }
   }
 }

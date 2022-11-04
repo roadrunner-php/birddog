@@ -9,7 +9,7 @@
           <strong class="ml-3 font-weight-bolder">Birddog</strong>
         </NuxtLink>
         <div class="navbar-nav me-auto mt-1 ml-4">
-          <div class="nav-item">
+          <div class="nav-item" v-if="hasConfig">
             <NuxtLink to="/config" class="nav-link">
               Config
             </NuxtLink>
@@ -22,5 +22,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+  computed: {
+    hasConfig() {
+      return this.$store.getters['config/hasConfig']
+    }
+  }
+}
 </script>

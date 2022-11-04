@@ -1,0 +1,16 @@
+{
+  "name": "@nuxtjs/toast",
+  "version": "3.3.1",
+  "license": "MIT",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "repository": "https://github.com/nuxt/modules",
+  "homepage": "https://github.com/nuxt/modules/tree/master/packages/toast",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "vue-toasted": "^1.1.28"
+  },
+  "gitHead": "c5e4dd962054eeec6be750b466236ce36c82e091"
+}

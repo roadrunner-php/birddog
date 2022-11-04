@@ -1,0 +1,62 @@
+{
+  "name": "vue-toasted",
+  "description": "Responsive Touch Compatible Toast plugin for VueJS 2+",
+  "version": "1.1.28",
+  "author": "Shakeeb Sadikeen <shakee.zats@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shakee93/vue-toasted.git"
+  },
+  "main": "./dist/vue-toasted.min.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --config ./build/webpack.release.js --progress --hide-modules",
+    "build-local-watch": "cross-env NODE_ENV=production webpack --config ./build/webpack.release.js --progress --hide-modules --watch",
+    "release": "npm run build && npm run core && npm run css",
+    "css": "cross-env NODE_ENV=production webpack --config ./build/webpack.release.css.js --progress --hide-modules ",
+    "core": "cross-env NODE_ENV=production webpack --config ./build/webpack.release.core.js --progress --hide-modules",
+    "es": "babel src --presets babel-preset-es2015 --out-dir dist"
+  },
+  "keywords": [
+    "toast",
+    "vue",
+    "vue-toasted",
+    "toasted",
+    "responsive",
+    "touch-compatible",
+    "touch",
+    "vue-toast",
+    "vue-toastr",
+    "toastr"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "animejs": "^2.2.0",
+    "autoprefixer": "^7.2.6",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-latest": "^6.24.1",
+    "cross-env": "^3.2.4",
+    "css-loader": "^0.25.0",
+    "es6-object-assign": "^1.1.0",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^0.9.0",
+    "hammerjs": "^2.0.8",
+    "node-sass": "^4.13.1",
+    "postcss-loader": "^2.1.6",
+    "requirejs": "^2.3.6",
+    "sass-loader": "^6.0.7",
+    "shortid": "^2.2.15",
+    "style-loader": "^0.18.2",
+    "vue-loader": "^11.0.0",
+    "vue-style-loader": "^3.1.2",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^2.7.0",
+    "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-dev-server": "^2.11.5"
+  }
+}

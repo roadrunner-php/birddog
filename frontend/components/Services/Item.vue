@@ -42,7 +42,15 @@ export default {
   },
   methods: {
     async restart() {
-      await this.$api.services.restart(this.server, this.name)
+      try {
+        await this.$api.services.restart(this.server, this.name)
+
+        this.$toast.success(`${this.name} processes on server ${this.server} were restarted.`)
+        this.$emit('restarted')
+      } catch (e) {
+        this.$toast.error(e.message)
+      }
+
       this.fetchData()
     },
     async fetchData() {

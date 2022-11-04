@@ -58,11 +58,16 @@ export default {
       return this.settings.indexOf(this.plugin.name) > -1
     },
     async reset() {
-      this.loading = true
-      await this.$api.plugins.reset(this.server, this.plugin.name)
-      this.loading = false
+      try {
+        this.loading = true
+        await this.$api.plugins.reset(this.server, this.plugin.name)
+        this.loading = false
 
-      this.$emit('reset')
+        this.$toast.success(`${this.pluginName} workers on server ${this.server} were restarted.`)
+        this.$emit('reset')
+      } catch(e) {
+        this.$toast.error(e.message)
+      }
     }
   },
   computed: {

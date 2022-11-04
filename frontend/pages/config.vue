@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="hasConfig">
     <nav aria-label="breadcrumb" class="mb-4">
       <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">
@@ -24,8 +24,14 @@
 <script>
 export default {
   computed: {
+    server() {
+      return this.$store.getters['servers/getDefaultServer']
+    },
     config() {
       return this.$store.getters['config/getConfig']
+    },
+    hasConfig() {
+      return this.$store.getters['config/hasConfig']
     }
   }
 }
