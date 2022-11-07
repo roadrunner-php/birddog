@@ -112,6 +112,10 @@ WORKDIR /app
 RUN composer config --no-plugins allow-plugins.spiral/composer-publish-plugin false
 RUN composer install --no-dev
 
+RUN echo "Download RoadRunner"
+RUN ./vendor/bin/rr get-binary
+
+WORKDIR /app/bin
 # Download all required binaries
 RUN chmod +x get-binaries.sh
 RUN ./get-binaries.sh
