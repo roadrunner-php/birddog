@@ -21,8 +21,8 @@ final class RegisterRequest extends Filter implements HasFilterDefinition
     public function filterDefinition(): FilterDefinitionInterface
     {
         return new FilterDefinition([
-            'name' => ['required', 'string'],
-            'address' => ['required', 'string'],
+            'name' => ['required', 'string', 'custom:serverName'],
+            'address' => ['required', 'string', 'custom:tcpAddress'],
         ]);
     }
 }

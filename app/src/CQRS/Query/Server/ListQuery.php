@@ -6,6 +6,9 @@ namespace App\CQRS\Query\Server;
 
 use Spiral\Cqrs\QueryInterface;
 
+/**
+ * Get all available servers.
+ */
 final class ListQuery implements QueryInterface
 {
 }

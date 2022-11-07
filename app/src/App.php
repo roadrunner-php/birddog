@@ -9,12 +9,11 @@ use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader as Framework;
 use Spiral\Cqrs\Bootloader\CqrsBootloader;
 use Spiral\DotEnv\Bootloader as DotEnv;
-use Spiral\EventBus\Bootloader\EventBusBootloader;
-use Spiral\Events\Bootloader\EventsBootloader;
 use Spiral\Framework\Kernel;
 use Spiral\League\Event\Bootloader\EventBootloader;
 use Spiral\Router\Bootloader\AnnotatedRoutesBootloader;
 use Spiral\RoadRunnerBridge\Bootloader as RoadRunnerBridge;
+use Spiral\Serializer\Bootloader\SerializerBootloader;
 use Spiral\Tokenizer\Bootloader\TokenizerBootloader;
 use Spiral\Validation\Bootloader\ValidationBootloader;
 use Spiral\Nyholm\Bootloader as Nyholm;
@@ -29,16 +28,20 @@ class App extends Kernel
     ];
 
     protected const LOAD = [
-        EventsBootloader::class,
+        SerializerBootloader::class,
+
+        // RoadRunner
+        Nyholm\NyholmBootloader::class,
+        RoadRunnerBridge\HttpBootloader::class,
+        RoadRunnerBridge\CacheBootloader::class,
+        RoadRunnerBridge\CentrifugoBootloader::class,
+
         EventBootloader::class,
 
         // Logging and exceptions handling
         Bootloader\LoggingBootloader::class,
         Bootloader\ExceptionHandlerBootloader::class,
 
-        // RoadRunner
-        Nyholm\NyholmBootloader::class,
-        RoadRunnerBridge\HttpBootloader::class,
         Framework\Http\RouterBootloader::class,
         AnnotatedRoutesBootloader::class,
         Framework\Http\JsonPayloadsBootloader::class,
@@ -66,5 +69,9 @@ class App extends Kernel
     protected const APP = [
         Bootloader\RPCBootloader::class,
         Bootloader\RoutesBootloader::class,
+        Bootloader\HttpClientBootloader::class,
+        Bootloader\PrometheusParserBootloader::class,
+        Bootloader\ValidatorBootloader::class,
+        Bootloader\VictoriaMetricsBootloader::class,
     ];
 }

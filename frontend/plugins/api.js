@@ -1,4 +1,4 @@
-import apiMethods from '~/api/rest'
+import apiMethods from '~/api/ws'
 
 export default function (ctx, inject) {
   const api = new class Api {
@@ -9,9 +9,10 @@ export default function (ctx, inject) {
       }
     }
 
-    get config() {
+    get rr() {
       return {
-        get: apiMethods.configGet(ctx)
+        config: apiMethods.configGet(ctx),
+        version: apiMethods.versionGet(ctx),
       }
     }
 
@@ -36,6 +37,13 @@ export default function (ctx, inject) {
         pipelines: apiMethods.jobsPipelines(ctx),
         pause: apiMethods.jobsPipelinePause(ctx),
         resume: apiMethods.jobsPipelineResume(ctx)
+      }
+    }
+
+    get metrics() {
+      return {
+        get: apiMethods.metricsGet(ctx),
+        getByKey: apiMethods.metricsGetByKey(ctx)
       }
     }
   }

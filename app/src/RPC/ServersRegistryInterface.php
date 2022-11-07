@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\RPC;
 
+use Psr\Http\Message\UriInterface;
+
 interface ServersRegistryInterface
 {
     /**
@@ -17,5 +19,5 @@ interface ServersRegistryInterface
      */
     public function getServersNames(): array;
 
-    public function getServerAddress(string $name): ?string;
+    public function getServerAddress(string $name): ?UriInterface;
 }

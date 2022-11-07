@@ -4,30 +4,31 @@ declare(strict_types=1);
 
 namespace App\RPC;
 
+use Nyholm\Psr7\Uri;
+use Psr\Http\Message\UriInterface;
+use Psr\SimpleCache\CacheInterface;
+
 final class ServersRegistry implements ServersRegistryInterface
 {
-    /**
-     * @var array<string, array{
-     *     addess: non-empty-string
-     * }>
-     */
-    private array $servers;
-
     public function __construct(
-        ServersConfig $config
+        private readonly CacheInterface $cache,
+        array $servers = [],
     ) {
-        $this->servers = $config->getServers();
+        foreach ($servers as $name => $address) {
+            $this->addServer($name, $address);
+        }
     }
 
     public function getServersNames(): array
     {
-        return \array_keys($this->servers);
+        return \array_keys($this->getServersFromCache());
     }
 
-    public function getServerAddress(string $name): ?string
+    public function getServerAddress(string $name): ?UriInterface
     {
-        if (isset($this->servers[$name]['address'])) {
-            return $this->servers[$name]['address'];
+        $servers = $this->getServersFromCache();
+        if (isset($servers[$name]['address'])) {
+            return new Uri($servers[$name]['address']);
         }
 
         return null;
@@ -35,8 +36,18 @@ final class ServersRegistry implements ServersRegistryInterface
 
     public function addServer(string $name, string $host): void
     {
-        $this->servers[$name] = [
-            'address' => $host,
-        ];
+        $servers = $this->getServersFromCache();
+        $servers[$name] = ['address' => $host];
+        $this->cache->set('servers', $servers);
+    }
+
+    /**
+     * @return array<string, array{
+     *     address: non-empty-string
+     * }>
+     */
+    private function getServersFromCache(): array
+    {
+        return $this->cache->get('servers', []);
     }
 }
