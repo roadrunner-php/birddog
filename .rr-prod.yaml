@@ -4,8 +4,7 @@ rpc:
     listen: tcp://127.0.0.1:6001
 
 logs:
-    mode: production
-    level: error
+    level: ${RR_LOG_LEVEL}
 
 http:
     address: 0.0.0.0:8081
@@ -29,6 +28,8 @@ kv:
 server:
     command: "php app.php"
     relay: pipes
+    env:
+        BROADCAST_CONNECTION: centrifugo
 
 service:
     frontend:
@@ -48,4 +49,4 @@ centrifuge:
     proxy_address: "tcp://127.0.0.1:10001"
     grpc_api_address: "127.0.0.1:10000"
     poll:
-        num_workers: 5
+        num_workers: ${RR_CENTRIFUGE_NUM_WORKERS}

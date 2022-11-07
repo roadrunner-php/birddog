@@ -54,8 +54,8 @@ services:
 There ENV variables that can be used to configure the Birddog:
 
 ```dotenv
-# Birddog API server URL
-API_URL=http://127.0.0.1:8080
+# Birddog Websocket API URL
+WS_URL=http://127.0.0.1:8080/connection/websocket
 
 # Default RR RPC server address
 # It works only if you won't relace DEFAULT_RPC_SERVER ENV variable

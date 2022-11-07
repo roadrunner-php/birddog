@@ -9,7 +9,7 @@
     "proxy_subscribe": true,
     "proxy_connect": true,
     "allow_subscribe_for_client": true,
-    "address": "127.0.0.1",
+    "address": "0.0.0.0",
     "port": 8080,
     "grpc_api": true,
     "grpc_api_address": "127.0.0.1",

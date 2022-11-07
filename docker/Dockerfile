@@ -113,7 +113,7 @@ RUN composer config --no-plugins allow-plugins.spiral/composer-publish-plugin fa
 RUN composer install --no-dev
 
 RUN echo "Download RoadRunner"
-RUN ./vendor/bin/rr get-binary
+RUN ./vendor/bin/rr get-binary -s beta
 
 WORKDIR /app/bin
 # Download all required binaries
