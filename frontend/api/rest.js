@@ -49,6 +49,13 @@ const serviceStatus = ({$axios}) => async (server, service) => $axios.$get(`/ser
 const servicesTerminate = ({$axios}) => async (server, service) => $axios.$post(`/service/terminate`, {server, service})
 const servicesRestart = ({$axios}) => async (server, service) => $axios.$post(`/service/restart`, {server, service})
 
+// Metrics
+const metricsGet = ({$axios}) => async (server) => $axios.$get(`/metrics?server=${server}`)
+  .then((response) => response.data)
+
+const metricsGeByKey = ({$axios}) => async (server, key) => $axios.$get(`/metrics/${key}?server=${server}`)
+  .then((response) => response.data)
+
 export default {
   serversList,
   pluginsList,
@@ -62,5 +69,7 @@ export default {
   servicesRestart,
   serviceStatus,
   serverRegister,
-  configGet
+  configGet,
+  metricsGet,
+  metricsGeByKey
 }

@@ -6,6 +6,9 @@ namespace App\CQRS\Query\Informer;
 
 use Spiral\Cqrs\QueryInterface;
 
+/**
+ * Get all plugins with workers.
+ */
 final class ListQuery implements QueryInterface
 {
     public function __construct(

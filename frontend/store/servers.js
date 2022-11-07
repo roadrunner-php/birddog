@@ -9,8 +9,17 @@ export const mutations = {
     state.servers = servers
   },
   setDefaultServer(state, server) {
+    if (state.defaultServer) {
+      this.$ws.serverChannel(state.defaultServer).unsubscribe()
+    }
+
+    this.$ws.serverChannel(server)
+
     state.defaultServer = server
+
     this.dispatch('config/fetchConfig', server)
+    this.dispatch('metrics/fetchMetrics', server)
+
   }
 }
 

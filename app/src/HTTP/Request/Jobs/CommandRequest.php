@@ -4,34 +4,22 @@ declare(strict_types=1);
 
 namespace App\HTTP\Request\Jobs;
 
-use App\HTTP\Request\RulesTrait;
-use App\RPC\ServersRegistryInterface;
+use App\HTTP\Request\AbstractServerFilter;
 use Spiral\Filters\Attribute\Input\Post;
-use Spiral\Filters\Model\Filter;
-use Spiral\Filters\Model\FilterDefinitionInterface;
-use Spiral\Filters\Model\HasFilterDefinition;
-use Spiral\Validator\FilterDefinition;
 
-final class CommandRequest extends Filter implements HasFilterDefinition
+final class CommandRequest extends AbstractServerFilter
 {
-    use RulesTrait;
-
-    public function __construct(
-        private readonly ServersRegistryInterface $registry
-    ) {
-    }
-
     #[Post]
     public string $server;
 
     #[Post]
     public string $pipeline;
 
-    public function filterDefinition(): FilterDefinitionInterface
+    protected function getValidationRules(): array
     {
-        return new FilterDefinition([
-            'server' => $this->serverRules($this->registry->getServersNames()),
-            'pipeline' => ['required', 'string'],
-        ]);
+        $rules = parent::getValidationRules();
+        $rules['pipeline'] = ['required', 'string', 'custom:pipelineName'];
+
+        return $rules;
     }
 }

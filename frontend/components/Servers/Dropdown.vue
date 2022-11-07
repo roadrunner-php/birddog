@@ -38,6 +38,12 @@ export default {
       this.$store.commit('servers/setDefaultServer', server)
     }
   },
+  mounted() {
+    this.$ws.channel('public')
+      .listen('server.registered', ({ server }) => {
+        this.$store.dispatch('servers/fetchServers')
+      })
+  },
   computed: {
     hasMultipleServers() {
       return this.servers.length > 1

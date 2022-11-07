@@ -3,12 +3,12 @@ version: '2.7'
 rpc:
     listen: tcp://127.0.0.1:6001
 
-server:
-    command: "php app.php"
-    relay: pipes
+logs:
+    mode: production
+    level: error
 
 http:
-    address: 0.0.0.0:8080
+    address: 0.0.0.0:8081
     middleware: [ "headers", "gzip" ]
     headers:
         cors:
@@ -19,12 +19,33 @@ http:
             exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
             max_age: 600
     pool:
-        num_workers: 3
+        num_workers: 1
+
+kv:
+    settings:
+        driver: memory
+        config: { }
+
+server:
+    command: "php app.php"
+    relay: pipes
 
 service:
     frontend:
-        command: sh spa.sh
+        use_service_name: true
+        command: sh frontend.sh
+    centrifuge:
+        service_name_in_log: true
+        command: "./bin/centrifugo --config=centrifugo.json"
+    victoria-metrics:
+        service_name_in_log: true
+        command: "./bin/victoria-metrics-prod -retentionPeriod=1d -opentsdbHTTPListenAddr=:4242"
+    snapshots:
+        service_name_in_log: true
+        command: "php app.php take:snapshots --period=10"
 
-logs:
-    mode: production
-    level: error
+centrifuge:
+    proxy_address: "tcp://127.0.0.1:10001"
+    grpc_api_address: "tcp://127.0.0.1:10000"
+    poll:
+        num_workers: 5

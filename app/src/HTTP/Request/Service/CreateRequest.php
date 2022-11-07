@@ -4,24 +4,12 @@ declare(strict_types=1);
 
 namespace App\HTTP\Request\Service;
 
-use App\HTTP\Request\RulesTrait;
-use App\RPC\ServersRegistryInterface;
+use App\HTTP\Request\AbstractServerFilter;
 use Spiral\Filters\Attribute\Input\Post;
 use Spiral\Filters\Attribute\Setter;
-use Spiral\Filters\Model\Filter;
-use Spiral\Filters\Model\FilterDefinitionInterface;
-use Spiral\Filters\Model\HasFilterDefinition;
-use Spiral\Validator\FilterDefinition;
 
-final class CreateRequest extends Filter implements HasFilterDefinition
+final class CreateRequest extends AbstractServerFilter
 {
-    use RulesTrait;
-
-    public function __construct(
-        private readonly ServersRegistryInterface $registry
-    ) {
-    }
-
     #[Post]
     public string $server;
 
@@ -50,17 +38,17 @@ final class CreateRequest extends Filter implements HasFilterDefinition
     #[Post]
     public array $env = [];
 
-    public function filterDefinition(): FilterDefinitionInterface
+    protected function getValidationRules(): array
     {
-        return new FilterDefinition([
-            'server' => $this->serverRules($this->registry->getServersNames()),
-            'name' => ['required', 'string'],
-            'command' => ['required', 'string'],
-            'processNum' => ['int'],
-            'execTimeout' => ['int'],
-            'remainAfterExit' => ['bool'],
-            'restartSec' => ['int'],
-            'env' => ['is_array'],
-        ]);
+        $rules = parent::getValidationRules();
+        $rules['name'] = ['required', 'string', 'custom:serviceName'];
+        $rules['command'] = ['required', 'string'];
+        $rules['processNum'] = ['int'];
+        $rules['execTimeout'] = ['int'];
+        $rules['restartSec'] = ['int'];
+        $rules['remainAfterExit'] = ['bool'];
+        $rules['env'] = ['is_array'];
+
+        return $rules;
     }
 }

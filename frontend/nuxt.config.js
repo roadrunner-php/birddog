@@ -3,6 +3,7 @@ export default {
 
   env: {
     API_URL: process.env.API_URL || 'http://127.0.0.1:8080',
+    WS_URL: process.env.WS_URL || 'ws://127.0.0.1:8080/connection/websocket',
   },
 
   head: {
@@ -26,8 +27,10 @@ export default {
   plugins: [
     {src: '~/plugins/logger.js'},
     {src: '~/plugins/axios.js'},
+    {src: '~/plugins/cenrifugo.js'},
     {src: '~/plugins/api.js'},
     {src: '~/plugins/bootstrap.js'},
+    {src: '~/plugins/chart.js', mode: 'client'}
   ],
 
   components: true,

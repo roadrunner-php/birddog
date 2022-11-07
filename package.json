@@ -1,9 +1,6 @@
 {
-  "name": "RoadRunner monitor",
+  "name": "RoadRunner Birddog",
   "scripts": {
     "dev": "cd frontend && npm run dev"
-  },
-  "dependencies": {
-    "@nuxtjs/toast": "^3.3.1"
   }
 }

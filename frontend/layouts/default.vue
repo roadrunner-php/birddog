@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-4">
+  <div class="container-fluid py-4">
     <UIHeader/>
     <div class="mt-4">
       <Nuxt/>

@@ -1,8 +1,12 @@
 .idea
+victoria-metrics-data
 vendor
 runtime
 rr*
+centrifugo*
+influxd*
 spiral*
 .env
 .phpunit.result.cache
 composer.lock
+/bin

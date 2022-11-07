@@ -23,6 +23,11 @@
 
 <script>
 export default {
+  head() {
+    return {
+      title: `RoadRunner config - ${this.server}`
+    }
+  },
   computed: {
     server() {
       return this.$store.getters['servers/getDefaultServer']
