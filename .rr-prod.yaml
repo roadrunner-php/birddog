@@ -18,7 +18,7 @@ http:
             exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
             max_age: 600
     pool:
-        num_workers: 1
+        num_workers: ${RR_HTTP_NUM_WORKERS}
 
 kv:
     settings:
@@ -46,7 +46,7 @@ service:
         command: "php app.php take:snapshots --period=10"
 
 centrifuge:
-    proxy_address: "tcp://127.0.0.1:10001"
-    grpc_api_address: "127.0.0.1:10000"
+    proxy_address: ${RR_CENTRIFUGE_PROXY_ADDRESS}
+    grpc_api_address: ${RR_CENTRIFUGE_GRPC_API_ADDRESS}
     poll:
         num_workers: ${RR_CENTRIFUGE_NUM_WORKERS}

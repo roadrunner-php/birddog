@@ -122,7 +122,6 @@ WORKDIR /app/frontend
 ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN npm install
 RUN npm run build
-RUN rm -rf node_modules
 
 WORKDIR /app
 
@@ -133,7 +132,10 @@ LABEL org.opencontainers.image.source=$REPOSITORY
 LABEL org.opencontainers.image.description="RoadRunner Birddog"
 LABEL org.opencontainers.image.licenses=MIT
 
-ENV RR_LOG_LEVEL=error
+ENV RR_LOG_LEVEL=debug
 ENV RR_CENTRIFUGE_NUM_WORKERS=5
+ENV RR_HTTP_NUM_WORKERS=1
+ENV RR_CENTRIFUGE_PROXY_ADDRESS="tcp://127.0.0.1:10001"
+ENV RR_CENTRIFUGE_GRPC_API_ADDRESS="127.0.0.1:10000"
 
 CMD ./rr serve -c .rr-prod.yaml
