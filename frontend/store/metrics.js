@@ -2,8 +2,10 @@ let timeout = null
 
 const fetchData = async ($api, commit, server) => {
   const metrics = await $api.metrics.get(server)
-  if (metrics instanceof Array) {
+  if (metrics instanceof Array && metrics.length > 0) {
     commit('setMetrics', metrics)
+  } else {
+    commit('setMetrics', null)
   }
 }
 

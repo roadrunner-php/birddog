@@ -10,8 +10,10 @@ const serversList = ({$axios}) => async () => $axios.$get('/servers')
 const serverRegister = ({$axios}) => async (name, address) => $axios.$post('/server/register', {name, address})
 
 // Config
-const configGet = ({$axios}) => async (server) => $axios.$get(`/config?server=${server}`)
+const configGet = ({$axios}) => async (server) => $axios.$get(`/rr/config?server=${server}`)
   .then((response) => response)
+const versionGet = ({$axios}) => async (server) => $axios.$get(`/rr/version?server=${server}`)
+  .then((response) => response.version)
 
 // Plugins
 const pluginsList = ({$axios}) => async (server) => $axios.$get(`/plugins?server=${server}`)
