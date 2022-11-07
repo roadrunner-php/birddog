@@ -20,8 +20,12 @@ final class GetConfigHandler
     {
         $rpc = $this->rpc->getServer($query->server, new JsonCodec());
 
-        $config = $rpc->call('rpc.Config', true);
+        try {
+            $config = $rpc->call('rpc.Config', true);
 
-        return \json_decode(\base64_decode($config), true);
+            return \json_decode(\base64_decode($config), true);
+        } catch (\Throwable $e) {
+            return [];
+        }
     }
 }
