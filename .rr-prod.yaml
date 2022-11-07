@@ -46,6 +46,6 @@ service:
 
 centrifuge:
     proxy_address: "tcp://127.0.0.1:10001"
-    grpc_api_address: "tcp://127.0.0.1:10000"
+    grpc_api_address: "127.0.0.1:10000"
     poll:
         num_workers: 5
