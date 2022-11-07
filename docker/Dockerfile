@@ -1,8 +1,6 @@
 ARG APP_IMAGE=spiralscout/php81-grpc:1.0.0
 ARG ROAD_RUNNER_IMAGE=2.11.4
 
-# Build rr binary
-FROM spiralscout/roadrunner:$ROAD_RUNNER_IMAGE as builder
 FROM $APP_IMAGE
 
 ENV NODE_VERSION 19.0.0
@@ -124,6 +122,7 @@ WORKDIR /app/frontend
 ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN npm install
 RUN npm run build
+RUN rm -rf node_modules
 
 WORKDIR /app
 
@@ -133,5 +132,8 @@ EXPOSE 8080
 LABEL org.opencontainers.image.source=$REPOSITORY
 LABEL org.opencontainers.image.description="RoadRunner Birddog"
 LABEL org.opencontainers.image.licenses=MIT
+
+ENV RR_LOG_LEVEL=error
+ENV RR_CENTRIFUGE_NUM_WORKERS=5
 
 CMD ./rr serve -c .rr-prod.yaml
