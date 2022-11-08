@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class WorkersAction
 {
-    #[Route('/plugin/workers', name: 'api.plugin.workers', methods: 'GET')]
+    #[Route('/api/plugin/workers', name: 'api.plugin.workers', methods: 'GET')]
     public function __invoke(QueryBusInterface $bus, WorkerRequest $request): array
     {
         return [

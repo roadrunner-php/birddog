@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class CloseConnectionAction
 {
-    #[Route('/tcp/close', name: 'api.tcp.close', methods: 'POST')]
+    #[Route('/api/tcp/close', name: 'api.tcp.close', methods: 'POST')]
     public function __invoke(CommandBusInterface $bus, CloseConnectionRequest $request): array
     {
         return [

@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class PauseAction
 {
-    #[Route('/jobs/pipeline/pause', name: 'api.jobs.pipeline.pause', methods: 'POST')]
+    #[Route('/api/jobs/pipeline/pause', name: 'api.jobs.pipeline.pause', methods: 'POST')]
     public function __invoke(CommandBusInterface $bus, CommandRequest $request): array
     {
         $bus->dispatch(new PauseCommand($request->server, $request->pipeline));

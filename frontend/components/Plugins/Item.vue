@@ -19,20 +19,26 @@
         <span class="badge badge-light border mr-2">
           Workers: <strong>{{ plugin.workers.length }}</strong>
         </span>
+        <button class="btn btn-light-outline btn-sm" @click="toggle">
+          <b-icon icon="chevron-up" v-if="open"/>
+          <b-icon icon="chevron-down" v-else="open"/>
+        </button>
       </div>
     </div>
 
-    <div class="list-group list-group-flush" v-if="hasWorkers">
-      <PluginsWorker v-for="worker in sortedWorkers" :worker="worker" :key="worker.pid"/>
-    </div>
-    <UIWarningMessage v-else>
-      There are no run workers.
-    </UIWarningMessage>
-    <div class="card-footer p-2" v-if="plugin.is_ressetable">
-      <button type="button" class="btn btn-sm btn-danger ml-2" @click="reset">
-        <b-icon icon="arrow-clockwise"/>
-        Restart
-      </button>
+    <div v-if="open">
+      <div class="list-group list-group-flush" v-if="hasWorkers">
+        <PluginsWorker v-for="worker in sortedWorkers" :worker="worker" :key="worker.pid"/>
+      </div>
+      <UIWarningMessage v-else>
+        There are no run workers.
+      </UIWarningMessage>
+      <div class="card-footer p-2" v-if="plugin.is_ressetable">
+        <button type="button" class="btn btn-sm btn-danger ml-2" @click="reset">
+          <b-icon icon="arrow-clockwise"/>
+          Restart
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -50,10 +56,14 @@ export default {
   data() {
     return {
       loading: false,
+      open: true,
       settings: ['jobs', 'service']
     }
   },
   methods: {
+    toggle() {
+      this.open = !this.open
+    },
     hasSettings() {
       return this.settings.indexOf(this.plugin.name) > -1
     },

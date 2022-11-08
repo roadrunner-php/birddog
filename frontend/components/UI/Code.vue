@@ -1,13 +1,19 @@
 <template>
   <pre>
-    <code v-highlight class="rounded p-4" :class="lang"><slot/></code>
+    <code
+      v-highlight
+      class="rounded p-4"
+      :class="lang"
+      v-text="code"
+    />
   </pre>
 </template>
 
 <script>
 export default {
   props: {
-    lang: String
+    lang: String,
+    code: Object
   }
 }
 </script>

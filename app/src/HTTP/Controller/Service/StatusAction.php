@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class StatusAction
 {
-    #[Route('/service/status', name: 'api.service.status', methods: 'GET')]
+    #[Route('/api/service/status', name: 'api.service.status', methods: 'GET')]
     public function __invoke(QueryBusInterface $bus, CommandRequest $request): array
     {
         return [

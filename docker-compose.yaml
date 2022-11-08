@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+    birddog:
+        build:
+            dockerfile: ./docker/Dockerfile
+        ports:
+            - "8080:80"
+        environment:
+            RR_LOG_LEVEL: debug

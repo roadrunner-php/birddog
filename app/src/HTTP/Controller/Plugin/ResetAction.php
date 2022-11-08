@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class ResetAction
 {
-    #[Route('/plugin/reset', name: 'api.plugin.reset', methods: 'POST')]
+    #[Route('/api/plugin/reset', name: 'api.plugin.reset', methods: 'POST')]
     public function __invoke(CommandBusInterface $bus, ResetRequest $request): array
     {
         return [

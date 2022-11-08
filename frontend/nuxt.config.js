@@ -1,10 +1,14 @@
+const host = window.location.host
+const httpProtocol = window.location.protocol === 'https:' ? 'https' : 'http'
+const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
+
 export default {
   ssr: false,
   target: 'static',
 
   env: {
-    API_URL: process.env.API_URL || 'http://127.0.0.1:8080',
-    WS_URL: process.env.WS_URL || 'ws://127.0.0.1:8080/connection/websocket',
+    API_URL: process.env.API_URL || `${httpProtocol}://${host}`,
+    WS_URL: process.env.WS_URL || `${wsProtocol}://${host}/connection/websocket`,
   },
 
   head: {

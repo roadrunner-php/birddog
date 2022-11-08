@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class GetVersionAction
 {
-    #[Route('/rr/version', name: 'api.rr.version.get', methods: 'GET')]
+    #[Route('/api/rr/version', name: 'api.rr.version.get', methods: 'GET')]
     public function __invoke(QueryBusInterface $bus, GetRequest $request): array
     {
         return $bus->ask(new GetVersionQuery($request->server));

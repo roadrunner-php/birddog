@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class ListAction
 {
-    #[Route('/plugins', name: 'api.plugin.list', methods: 'GET')]
+    #[Route('/api/plugins', name: 'api.plugin.list', methods: 'GET')]
     public function __invoke(QueryBusInterface $bus, ListRequest $request): array
     {
         return [

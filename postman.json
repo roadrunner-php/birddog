@@ -14,11 +14,12 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/jobs/pipelines?server=default",
+                            "raw": "{{server}}/api/jobs/pipelines?server=default",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "jobs",
                                 "pipelines"
                             ],
@@ -53,11 +54,12 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{server}}/jobs/pipeline/pause",
+                            "raw": "{{server}}/api/jobs/pipeline/pause",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "jobs",
                                 "pipeline",
                                 "pause"
@@ -87,11 +89,12 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{server}}/jobs/pipeline/resume",
+                            "raw": "{{server}}/api/jobs/pipeline/resume",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "jobs",
                                 "pipeline",
                                 "resume"
@@ -111,11 +114,12 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/plugins?server=default",
+                            "raw": "{{server}}/api/plugins?server=default",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "plugins"
                             ],
                             "query": [
@@ -134,11 +138,12 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/plugin/workers?server=default&plugin=jobs",
+                            "raw": "{{server}}/api/plugin/workers?server=default&plugin=jobs",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "plugin",
                                 "workers"
                             ],
@@ -177,11 +182,12 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{server}}/plugin/reset",
+                            "raw": "{{server}}/api/plugin/reset",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "plugin",
                                 "reset"
                             ]
@@ -195,11 +201,12 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/plugin/jobs?server=default&plugin=jobs",
+                            "raw": "{{server}}/api/plugin/jobs?server=default&plugin=jobs",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "plugin",
                                 "jobs"
                             ],
@@ -228,11 +235,12 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/servers",
+                            "raw": "{{server}}/api/servers",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "servers"
                             ]
                         }
@@ -254,17 +262,18 @@
                                 },
                                 {
                                     "key": "address",
-                                    "value": "tcp:\\\\127.0.0.1:6001",
+                                    "value": "tcp://127.0.0.1:6002",
                                     "type": "text"
                                 }
                             ]
                         },
                         "url": {
-                            "raw": "{{server}}/server/register",
+                            "raw": "{{server}}/api/server/register",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "server",
                                 "register"
                             ]
@@ -283,11 +292,12 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/services?server=default",
+                            "raw": "{{server}}/api/services?server=default",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "services"
                             ],
                             "query": [
@@ -306,11 +316,12 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/service/status?server=default&service=some_service_1",
+                            "raw": "{{server}}/api/service/status?server=default&service=some_service_1",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "service",
                                 "status"
                             ],
@@ -349,11 +360,12 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{server}}/service/restart",
+                            "raw": "{{server}}/api/service/restart",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "service",
                                 "restart"
                             ]
@@ -382,11 +394,12 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{server}}/service/terminate",
+                            "raw": "{{server}}/api/service/terminate",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "service",
                                 "terminate"
                             ]
@@ -440,11 +453,12 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{server}}/service/create",
+                            "raw": "{{server}}/api/service/create",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "service",
                                 "create"
                             ]
@@ -478,11 +492,12 @@
                             ]
                         },
                         "url": {
-                            "raw": "{{server}}/tcp/close",
+                            "raw": "{{server}}/api/tcp/close",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "tcp",
                                 "close"
                             ]
@@ -501,12 +516,78 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/config?server=default",
+                            "raw": "{{server}}/api/config?server=default",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
+                                "api",
                                 "config"
+                            ],
+                            "query": [
+                                {
+                                    "key": "server",
+                                    "value": "default"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Metrics",
+            "item": [
+                {
+                    "name": "Metrics.get",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{server}}/api/metrics?server=default",
+                            "host": [
+                                "{{server}}"
+                            ],
+                            "path": [
+                                "api",
+                                "metrics"
+                            ],
+                            "query": [
+                                {
+                                    "key": "server",
+                                    "value": "default"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Metrics.getByKey",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    ""
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{server}}/api/metrics/go_threads?server=default",
+                            "host": [
+                                "{{server}}"
+                            ],
+                            "path": [
+                                "api",
+                                "metrics",
+                                "go_threads"
                             ],
                             "query": [
                                 {

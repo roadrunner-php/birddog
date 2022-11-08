@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class TerminateAction
 {
-    #[Route('/service/terminate', name: 'api.service.terminate', methods: 'POST')]
+    #[Route('/api/service/terminate', name: 'api.service.terminate', methods: 'POST')]
     public function __invoke(CommandBusInterface $bus, CommandRequest $request): array
     {
         return [

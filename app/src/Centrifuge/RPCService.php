@@ -58,7 +58,7 @@ final class RPCService implements ServiceInterface
         [$method, $uri] = \explode(':', $request->method, 2);
         $method = \strtoupper($method);
 
-        $httpRequest = $this->requestFactory->createServerRequest(\strtoupper($method), $uri)
+        $httpRequest = $this->requestFactory->createServerRequest(\strtoupper($method), 'api/' . \ltrim($uri, '/'))
             ->withHeader('Content-Type', 'application/json');
 
 //        foreach ($request->headers as $key => $headers) {

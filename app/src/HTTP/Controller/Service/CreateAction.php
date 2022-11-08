@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class CreateAction
 {
-    #[Route('/service/create', name: 'api.service.create', methods: 'POST')]
+    #[Route('/api/service/create', name: 'api.service.create', methods: 'POST')]
     public function __invoke(CommandBusInterface $bus, CreateRequest $request): array
     {
         return [

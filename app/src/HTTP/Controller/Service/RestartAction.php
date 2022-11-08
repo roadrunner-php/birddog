@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class RestartAction
 {
-    #[Route('/service/restart', name: 'api.service.restart', methods: 'POST')]
+    #[Route('/api/service/restart', name: 'api.service.restart', methods: 'POST')]
     public function __invoke(CommandBusInterface $bus, CommandRequest $request): array
     {
         return [

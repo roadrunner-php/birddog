@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class GetMetricsAction
 {
-    #[Route('/metrics', name: 'api.metrics.list', methods: 'GET')]
+    #[Route('/api/metrics', name: 'api.metrics.list', methods: 'GET')]
     public function __invoke(QueryBusInterface $bus, MetricsRequest $request): array
     {
         return [

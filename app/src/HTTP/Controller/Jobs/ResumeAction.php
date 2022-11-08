@@ -11,7 +11,7 @@ use Spiral\Router\Annotation\Route;
 
 final class ResumeAction
 {
-    #[Route('/jobs/pipeline/resume', name: 'api.jobs.pipeline.resume', methods: 'POST')]
+    #[Route('/api/jobs/pipeline/resume', name: 'api.jobs.pipeline.resume', methods: 'POST')]
     public function __invoke(CommandBusInterface $bus, CommandRequest $request): array
     {
         $bus->dispatch(new ResumeCommand($request->server, $request->pipeline));

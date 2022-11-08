@@ -17,7 +17,7 @@
       <b-icon icon="braces" font-scale="1.4" class="mr-3"/> Server config
     </h4>
 
-    <UICode lang="json" v-if="config.version || false">{{ config }}</UICode>
+    <UICode lang="json" v-if="config || false" :code="config" />
   </div>
 </template>
 

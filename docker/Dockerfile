@@ -93,6 +93,8 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
   # smoke test
   && yarn --version
 
+RUN apk add --no-cache ngnix
+
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
 ARG CACHEBUST=1
@@ -107,6 +109,8 @@ ARG REPOSITORY=https://github.com/roadrunner-server/birddog
 RUN git clone $REPOSITORY /app
 
 WORKDIR /app
+RUN cp docker/nginx.conf /etc/nginx/sites-available/default
+
 RUN composer config --no-plugins allow-plugins.spiral/composer-publish-plugin false
 RUN composer install --no-dev
 
@@ -121,12 +125,12 @@ RUN ./get-binaries.sh
 WORKDIR /app/frontend
 ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN npm install
-RUN npm run build
+RUN npm run generate
+RUN rm -rf node_modules
 
 WORKDIR /app
 
-EXPOSE 3000
-EXPOSE 8080
+EXPOSE 80/tcp
 
 LABEL org.opencontainers.image.source=$REPOSITORY
 LABEL org.opencontainers.image.description="RoadRunner Birddog"

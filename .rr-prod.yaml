@@ -7,7 +7,7 @@ logs:
     level: ${RR_LOG_LEVEL}
 
 http:
-    address: 0.0.0.0:8081
+    address: 127.0.0.1:8081
     middleware: [ "headers", "gzip" ]
     headers:
         cors:
@@ -32,9 +32,8 @@ server:
         BROADCAST_CONNECTION: centrifugo
 
 service:
-    frontend:
-        use_service_name: true
-        command: sh frontend.sh
+    nginx:
+        command: "/usr/sbin/nginx -g daemon off"
     centrifuge:
         service_name_in_log: true
         command: "./bin/centrifugo --config=centrifugo.json"
@@ -50,3 +49,11 @@ centrifuge:
     grpc_api_address: ${RR_CENTRIFUGE_GRPC_API_ADDRESS}
     poll:
         num_workers: ${RR_CENTRIFUGE_NUM_WORKERS}
+
+fileserver:
+    address: 127.0.0.1:8082
+    stream_request_body: true
+    serve:
+        - prefix: "/"
+          root: "frontend/dist"
+          compress: true
