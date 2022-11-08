@@ -43,7 +43,7 @@ WORKDIR /app
 RUN apk add --no-cache nginx
 RUN cp docker/nginx/nginx.conf /etc/nginx/nginx.conf
 RUN [ -d /etc/nginx/conf.d ] ||  mkdir /etc/nginx/conf.d
-RUN cp docker/nginx/default.conf.conf /etc/nginx/conf.d/default.conf
+RUN cp docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80/tcp
 
