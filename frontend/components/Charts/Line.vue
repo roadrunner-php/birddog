@@ -19,7 +19,7 @@ export default {
       type: String,
       default: null
     },
-    metrics: Object,
+    metrics: Array,
     height: {
       type: String,
       default: '50vh'
