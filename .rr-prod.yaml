@@ -33,7 +33,7 @@ server:
 
 service:
     nginx:
-        command: "/usr/sbin/nginx -g daemon off"
+        command: "/usr/sbin/nginx"
     centrifuge:
         service_name_in_log: true
         command: "./bin/centrifugo --config=centrifugo.json"
