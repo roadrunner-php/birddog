@@ -11,6 +11,7 @@ final class GetMetricsByKeyQuery implements QueryInterface
     public function __construct(
         public readonly string $server,
         public readonly string $key,
+        public readonly array $tags = [],
     ) {
     }
 }

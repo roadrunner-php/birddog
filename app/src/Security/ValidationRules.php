@@ -18,6 +18,17 @@ final class ValidationRules extends AbstractChecker
         'tcpAddress' => 'Invalid TCP address.',
     ];
 
+    public function tags(array $tags): bool
+    {
+        foreach ($tags as $name => $value) {
+            if (empty($name) || ($value === null || $value === '')) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function uuid(string $uuid): bool
     {
         return \preg_match('/^\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$/i', $uuid) === 1;

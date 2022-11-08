@@ -5,7 +5,16 @@ declare(strict_types=1);
 namespace App\VictoriaMetrics;
 
 use App\VictoriaMetrics\Exception\ResponseException;
+use App\VictoriaMetrics\Payload\Metric;
+use App\VictoriaMetrics\Payload\Range;
+use App\VictoriaMetrics\Payload\Series;
+use App\VictoriaMetrics\Payload\Tag;
+use App\VictoriaMetrics\Payload\Value;
 use Carbon\Carbon;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class Client implements ClientInterface
@@ -21,6 +30,53 @@ final class Client implements ClientInterface
         $this->writeClient->request('POST', '/api/put', [
             'body' => \json_encode($point),
         ]);
+    }
+
+    public function series(
+        array $tags,
+        \DateTimeInterface $start = new Carbon('-30 minutes'),
+        \DateTimeInterface $end = new Carbon(),
+    ): Series {
+        $labels = '';
+        if ($tags !== []) {
+            $labels .= '{' . \implode(
+                    ',',
+                    \array_map(fn(Tag $tag) => \sprintf('%s="%s"', $tag->name, $tag->value), $tags)
+                ) . '}';
+        }
+
+        $query = \http_build_query([
+            'start' => $start->getTimestamp(),
+            'end' => $end->getTimestamp(),
+        ]);
+
+        $response = $this->send('GET', 'api/v1/series?match[]=' . $labels . '&' . $query, []);
+
+        $metrics = [];
+        foreach ($response as $metric) {
+            $tags = [];
+            $type = 'summary';
+            foreach ($metric as $key => $value) {
+                if ($key === '__name__' || $key === 'server') {
+                    continue;
+                }
+
+                if ($key === 'type') {
+                    $type = $value;
+                    continue;
+                }
+
+                $tags[] = new Tag($key, $value);
+            }
+
+            $metrics[] = new Metric(
+                name: $metric['__name__'],
+                type: $type,
+                tags: $tags,
+            );
+        }
+
+        return new Series($metrics, $start, $end);
     }
 
     public function queryRange(
@@ -40,12 +96,11 @@ final class Client implements ClientInterface
         $query = [
             'query' => $metric,
             'step' => $step,
+            'start' => $start->getTimestamp(),
+            'end' => $end->getTimestamp(),
         ];
 
-        $query['start'] = $start->getTimestamp();
-        $query['end'] = $end->getTimestamp();
-
-        $response = $this->send($query);
+        $response = $this->send('GET', 'api/v1/query_range', $query);
 
         $values = [];
         if (isset($response['result'][0]['values'])) {
@@ -61,18 +116,30 @@ final class Client implements ClientInterface
         return new Range($values, $start, $end);
     }
 
-    private function send(array $query): array
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws \JsonException
+     * @throws ResponseException
+     */
+    private function send(string $method, string $uri, array $query): array
     {
-        $response = $this->queryClient->request('GET', 'api/v1/query_range', [
+        $response = $this->queryClient->request(\strtoupper($method), $uri, [
             'query' => $query,
         ]);
 
-        $response = \json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $response = \json_decode(
+            json: $response->getContent(),
+            associative: true,
+            flags: JSON_THROW_ON_ERROR
+        );
 
         if ($response['status'] !== 'success') {
             throw new ResponseException('Query failed');
         }
 
-        return $response['data'];
+        return (array)$response['data'];
     }
 }

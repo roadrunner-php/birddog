@@ -15,7 +15,7 @@ final class GetMetricsAction
     public function __invoke(QueryBusInterface $bus, MetricsRequest $request): array
     {
         return [
-            'data' => \array_values($bus->ask(new GetAvailableMetricsQuery($request->server))),
+            'data' => $bus->ask(new GetAvailableMetricsQuery($request->server)),
         ];
     }
 }

@@ -1,11 +1,9 @@
 <template>
-  <div class="container-fluid py-4">
-    <UIHeader/>
-    <div class="mt-4">
-      <Nuxt/>
-    </div>
+  <main class="container-fluid py-4 d-flex flex-column flex-shrink-0">
+    <UIHeader class="mb-4"/>
+    <Nuxt class="flex-fill d-flex flex-column flex-shrink-0"/>
     <UIFooter/>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -15,5 +13,9 @@ export default {}
 <style type="text/css">
 body {
   background-color: whitesmoke;
+}
+
+body, #__nuxt, #__layout, #__layout > main {
+  min-height: 100vh;
 }
 </style>

@@ -22,15 +22,25 @@ const refreshPeriodically = ($api, commit, server) => {
 
 export const state = () => ({
   metrics: null,
+  enabled: [],
 })
 
 export const mutations = {
   setMetrics(state, metrics) {
     state.metrics = metrics
+  },
+  enable(state, metrics) {
+    state.enabled.push(metrics)
+  },
+  disable(state, metric) {
+    state.enabled = state.enabled.filter((m) => m.id !== metric.id)
   }
 }
 
 export const getters = {
+  getEnabledMetrics(state) {
+    return state.enabled
+  },
   getMetrics(state) {
     return state.metrics
   },

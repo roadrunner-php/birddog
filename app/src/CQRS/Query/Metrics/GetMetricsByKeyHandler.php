@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\CQRS\Query\Metrics;
 
 use App\VictoriaMetrics\ClientInterface;
-use App\VictoriaMetrics\Tag;
+use App\VictoriaMetrics\Payload\Tag;
 use Spiral\Cqrs\Attribute\QueryHandler;
-use Spiral\Cqrs\QueryBusInterface;
 
 final class GetMetricsByKeyHandler
 {
     public function __construct(
-        private readonly QueryBusInterface $queryBus,
         private readonly ClientInterface $client
     ) {
     }
@@ -20,18 +18,18 @@ final class GetMetricsByKeyHandler
     #[QueryHandler]
     public function handle(GetMetricsByKeyQuery $query): array
     {
-        $keys = $this->queryBus->ask(new GetAvailableMetricsQuery($query->server));
-
+        $tags = $query->tags;
+        $tags[] = new Tag('server', $query->server);
 
         $range = $this->client->queryRange(
             metric: $query->key,
-            tags: [
-                new Tag('server', $query->server),
-            ]
+            tags: $tags
         );
 
         return [
-            'metric' => $keys[$query->key],
+            'tags' => $tags,
+            'name' => $query->key,
+            'server' => $query->server,
             'range' => $range,
         ];
     }

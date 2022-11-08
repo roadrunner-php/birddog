@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\VictoriaMetrics;
+namespace App\VictoriaMetrics\Payload;
 
-final class Range implements \JsonSerializable
+final class Series implements \JsonSerializable
 {
     /**
-     * @param Value[] $values
+     * @param Metric[] $metrics
      */
     public function __construct(
-        public readonly array $values,
+        public readonly array $metrics,
         public readonly \DateTimeInterface $start,
         public readonly \DateTimeInterface $end,
     ) {
@@ -19,7 +19,7 @@ final class Range implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'values' => $this->values,
+            'metrics' => $this->metrics,
             'start' => $this->start->getTimestamp(),
             'end' => $this->end->getTimestamp(),
         ];

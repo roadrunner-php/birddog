@@ -1,13 +1,11 @@
 <template>
-  <div>
+  <div class="d-flex flex-column flex-shrink-0">
     <MetricsItem :server="server"
-                 :keys="['go_memstats_heap_alloc_bytes', 'go_memstats_heap_sys_bytes',]"
-                 units="bytes"
+                 v-for="metrics in enabledMetrics"
+                 :metric="metrics"
+                 :key="metrics.id"
                  class="mb-4" />
-    <MetricsItem :server="server"
-                 :keys="['process_open_fds']"
-                 units="bytes"
-                 class="mb-4" />
+    <MetricsList :server="server" />
   </div>
 </template>
 
@@ -16,5 +14,17 @@ export default {
   props: {
     server: String,
   },
+  computed: {
+    enabledMetrics() {
+      return this.$store.getters['metrics/getEnabledMetrics']
+    }
+  }
 }
 </script>
+
+
+<style type="text/css">
+.overflow-scroll {
+  overflow-y: scroll;
+}
+</style>

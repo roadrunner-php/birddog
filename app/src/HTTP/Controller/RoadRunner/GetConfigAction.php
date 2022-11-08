@@ -14,6 +14,8 @@ final class GetConfigAction
     #[Route('/rr/config', name: 'api.rr.config.get', methods: 'GET')]
     public function __invoke(QueryBusInterface $bus, GetRequest $request): array
     {
-        return $bus->ask(new GetConfigQuery($request->server));
+        return [
+            'config' => $bus->ask(new GetConfigQuery($request->server))
+        ];
     }
 }

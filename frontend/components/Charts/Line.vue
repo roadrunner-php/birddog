@@ -22,7 +22,7 @@ export default {
     metrics: Array,
     height: {
       type: String,
-      default: '50vh'
+      default: '80vh'
     },
   },
   computed: {
@@ -30,7 +30,7 @@ export default {
       let datasets = []
       this.metrics.forEach(metric => {
         let dataset = {
-          label: metric.metric.name,
+          label: metric.name,
           data: [],
           borderWidth: 1,
           borderColor: [

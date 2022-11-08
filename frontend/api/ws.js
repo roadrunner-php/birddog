@@ -11,7 +11,7 @@ const serverRegister = ({$ws}) => async (name, address) => $ws.rpc('post:server/
 
 // Roadrunner
 const configGet = ({$ws}) => async (server) => $ws.rpc(`get:rr/config`, {server})
-  .then((response) => response.data)
+  .then((response) => response.data.config)
 const versionGet = ({$ws}) => async (server) => $ws.rpc(`get:rr/version`, {server})
   .then((response) => response.data.version)
 
@@ -53,9 +53,9 @@ const servicesRestart = ({$ws}) => async (server, service) => $ws.rpc(`post:serv
 
 // Metrics
 const metricsGet = ({$ws}) => async (server) => $ws.rpc(`get:metrics`, {server})
-  .then((response) => response.data.data)
+  .then((response) => response.data.data.metrics)
 
-const metricsGetByKey = ({$ws}) => async (server, key) => $ws.rpc(`get:metrics/${key}`, {server})
+const metricsGetByKey = ({$ws}) => async (server, key, tags) => $ws.rpc(`get:metrics/${key}`, {server, tag: tags})
   .then((response) => response.data)
 
 export default {

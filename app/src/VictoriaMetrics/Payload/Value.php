@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\VictoriaMetrics;
+namespace App\VictoriaMetrics\Payload;
 
 final class Value implements \JsonSerializable
 {

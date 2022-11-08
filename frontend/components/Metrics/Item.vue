@@ -1,12 +1,15 @@
 <template>
   <div class="flex-fill">
-    <div class="card shadow-sm" v-if="metrics">
-      <div class="card-body">
-        <ChartsLine :metrics="metrics" />
+    <div class="card shadow-sm position-relative" v-if="hasMetrics">
+      <button class="btn btn-light-outline btn-sm position-absolute" style="top: 0; right: 0" @click="disable">
+        <b-icon icon="x"/>
+      </button>
+      <div class="py-2 pl-2">
+        <ChartsLine :metrics="m"/>
       </div>
     </div>
     <UIWarningMessage v-else>
-      Metric with name {{ name }} not found.
+      There is no metric.
     </UIWarningMessage>
   </div>
 </template>
@@ -18,27 +21,44 @@ export default {
   mixins: [PeriodicallyTimer],
   props: {
     server: String,
-    keys: Array
+    metric: Object
   },
   data() {
     return {
-      metrics: []
+      m: []
     }
   },
   watch: {
+    'metric.metrics'() {
+      this.fetchData()
+    },
     server() {
       this.fetchData()
     }
   },
   methods: {
+    disable() {
+      this.$store.commit('metrics/disable', this.metric)
+    },
     async fetchData() {
       let metrics = []
-      for (let key of this.keys) {
-        const metric = await this.$api.metrics.getByKey(this.server, key)
+      for (let m of this.metric.metrics) {
+        let t = {}
+
+        for (let tag of m.tags) {
+          t[tag.name] = tag.value
+        }
+
+        const metric = await this.$api.metrics.getByKey(this.server, m.name, t)
         metrics.push(metric)
       }
 
-      this.metrics = metrics
+      this.m = metrics
+    }
+  },
+  computed: {
+    hasMetrics() {
+      return this.m.length > 0
     }
   }
 }
