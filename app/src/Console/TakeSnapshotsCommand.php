@@ -45,6 +45,11 @@ final class TakeSnapshotsCommand extends Command
 
                         $point->addTag(new Tag('server', $server));
                         $point->addTag(new Tag('type', $metricNode->type));
+
+                        foreach ($metric->labels as $label) {
+                            $point->addTag(new Tag($label->name, $label->value));
+                        }
+
                         $points[] = $point;
                     }
                 }
