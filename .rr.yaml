@@ -35,6 +35,9 @@ service:
     frontend:
         service_name_in_log: true
         command: "npm run dev"
+        env:
+            API_URL: http://127.0.0.1:8080
+            WS_URL: ws://127.0.0.1:8080/connection/websocket
     centrifuge:
         service_name_in_log: true
         command: "./bin/centrifugo --config=centrifugo.json"

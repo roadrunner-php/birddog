@@ -2,6 +2,11 @@ export default {
   ssr: false,
   target: 'static',
 
+  env: {
+    API_URL: process.env.API_URL || null,
+    WS_URL: process.env.WS_URL || null,
+  },
+
   head: {
     title: 'Birddog',
     htmlAttrs: {
