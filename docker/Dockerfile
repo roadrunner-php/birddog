@@ -93,7 +93,8 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
   # smoke test
   && yarn --version
 
-RUN apk add --no-cache ngnix
+RUN apk add --no-cache nginx
+RUN apk cache clean
 
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
@@ -109,7 +110,7 @@ ARG REPOSITORY=https://github.com/roadrunner-server/birddog
 RUN git clone $REPOSITORY /app
 
 WORKDIR /app
-RUN cp docker/nginx.conf /etc/nginx/sites-available/default
+RUN mv docker/nginx.conf /etc/nginx/conf.d
 
 RUN composer config --no-plugins allow-plugins.spiral/composer-publish-plugin false
 RUN composer install --no-dev

@@ -1,5 +1,9 @@
+const host = window.location.host
+const httpProtocol = window.location.protocol === 'https:' ? 'https' : 'http'
+const API_URL = process.env.API_URL || `${httpProtocol}://${host}`
+
 export default function ({$axios, $logger, redirect}) {
-  $axios.setBaseURL(process.env.API_URL)
+  $axios.setBaseURL(API_URL)
 
   $axios.onRequest(config => {
     $logger.debug(`Making request: ${config.url}`, config)

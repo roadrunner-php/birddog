@@ -1,15 +1,7 @@
-const host = window.location.host
-const httpProtocol = window.location.protocol === 'https:' ? 'https' : 'http'
-const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
 
 export default {
   ssr: false,
   target: 'static',
-
-  env: {
-    API_URL: process.env.API_URL || `${httpProtocol}://${host}`,
-    WS_URL: process.env.WS_URL || `${wsProtocol}://${host}/connection/websocket`,
-  },
 
   head: {
     title: 'Birddog',
@@ -63,11 +55,6 @@ export default {
   bootstrapVue: {
     icons: true,
     components: ['BDropdown', 'BDropdownItem']
-  },
-
-  axios: {
-    baseURL: process.env.API_URL
-    // proxy: true
   },
 
   build: {}

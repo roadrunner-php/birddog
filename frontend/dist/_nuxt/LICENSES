@@ -1,17 +1,4 @@
 /*!
- * Vue.js v2.7.13
- * (c) 2014-2022 Evan You
- * Released under the MIT License.
- */
-
-/*!
- * vuex v3.6.2
- * (c) 2021 Evan You
- * @license MIT
- */
-
-
-/*!
  * @kurkle/color v0.2.1
  * https://github.com/kurkle/color#readme
  * (c) 2022 Jukka Kurkela
@@ -63,3 +50,16 @@
  */
 
 //! moment.js
+
+
+/*!
+ * Vue.js v2.7.13
+ * (c) 2014-2022 Evan You
+ * Released under the MIT License.
+ */
+
+/*!
+ * vuex v3.6.2
+ * (c) 2021 Evan You
+ * @license MIT
+ */
