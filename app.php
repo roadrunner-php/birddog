@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\App;
+use App\Application\App;
 
 // If you forgot to configure some of this in your php.ini file,
 // then don't worry, we will set the standard environment

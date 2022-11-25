@@ -17,7 +17,7 @@
       </span>
       <div class="d-flex align-items-center">
         <span class="badge badge-light border mr-2">
-          Workers: <strong>{{ plugin.workers.length }}</strong>
+          Workers: <strong>{{ totalWorkers }}</strong>
         </span>
         <button class="btn btn-light-outline btn-sm" @click="toggle">
           <b-icon icon="chevron-up" v-if="open"/>
@@ -84,11 +84,14 @@ export default {
     pluginName() {
       return this.plugin.name.capitalize()
     },
+    totalWorkers() {
+      return this.sortedWorkers.length
+    },
     hasWorkers() {
-      return this.plugin.workers.length > 0
+      return this.totalWorkers > 0
     },
     sortedWorkers() {
-      return this.plugin.workers
+      return this.plugin.workers.data
     }
   }
 }

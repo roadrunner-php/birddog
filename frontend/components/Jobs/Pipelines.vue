@@ -4,6 +4,7 @@
       <h4 class="mb-4">Pipelines</h4>
 
       <JobsPipeline
+        class="mb-5"
         :pipeline="pipeline"
         :server="server"
         :key="pipeline.name"

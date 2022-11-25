@@ -34,18 +34,26 @@ server:
 service:
     frontend:
         service_name_in_log: true
+        remain_after_exit: true
+        restart_sec: 1
         command: "npm run dev"
         env:
             API_URL: http://127.0.0.1:8080
             WS_URL: ws://127.0.0.1:8080/connection/websocket
     centrifuge:
         service_name_in_log: true
+        remain_after_exit: true
+        restart_sec: 1
         command: "./bin/centrifugo --config=centrifugo.json"
     victoria-metrics:
         service_name_in_log: true
+        remain_after_exit: true
+        restart_sec: 1
         command: "./bin/victoria-metrics-prod -retentionPeriod=1d -opentsdbHTTPListenAddr=:4242"
     snapshots:
         service_name_in_log: true
+        remain_after_exit: true
+        restart_sec: 1
         command: "php app.php take:snapshots --period=15"
 
 metrics:
@@ -53,7 +61,7 @@ metrics:
 
 centrifuge:
     proxy_address: "tcp://127.0.0.1:10001"
-    grpc_api_address: "127.0.0.1:10000"
+    grpc_api_address: "tcp://127.0.0.1:10000"
     pool:
         reset_timeout: 10
         num_workers: 2
