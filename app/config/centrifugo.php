@@ -5,8 +5,7 @@ declare(strict_types=1);
 use App\Centrifuge\ConnectService;
 use App\Centrifuge\RPCService;
 use App\Centrifuge\SubscribeService;
-use RoadRunner\Centrifugo\RequestType;
-use App\Centrifuge\Interceptor;
+use RoadRunner\Centrifugo\Request\RequestType;
 
 $interceptors = [
     // Interceptor\LoggingInterceptor::class,
