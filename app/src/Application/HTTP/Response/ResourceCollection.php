@@ -17,7 +17,7 @@ class ResourceCollection implements ResourceInterface
      * @param class-string<ResourceInterface> $resourceClass
      */
     public function __construct(
-        private readonly iterable $data,
+        protected readonly iterable $data,
         protected string $resourceClass = JsonResource::class
     ) {
     }
@@ -30,12 +30,18 @@ class ResourceCollection implements ResourceInterface
         return $this->resourceClass;
     }
 
+    protected function getData(): iterable
+    {
+        return $this->data;
+    }
+
     public function resolve(ServerRequestInterface $request): array
     {
         $data = [];
         $resourceClass = $this->getResourceClass();
 
-        foreach ($this->data as $key => $row) {
+        foreach ($this->getData() as $key => $row) {
+            dump($row);
             $data[$key] = (new $resourceClass($row))->resolve($request);
         }
 

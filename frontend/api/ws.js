@@ -53,10 +53,10 @@ const servicesRestart = ({$ws}) => async (server, service) => $ws.rpc(`post:serv
 
 // Metrics
 const metricsGet = ({$ws}) => async (server) => $ws.rpc(`get:metrics`, {server})
-  .then((response) => response.data.data.metrics)
+  .then((response) => response.data.data)
 
 const metricsGetByKey = ({$ws}) => async (server, key, tags) => $ws.rpc(`get:metrics/${key}`, {server, tag: tags})
-  .then((response) => response.data)
+  .then((response) => response.data.data)
 
 export default {
   serversList,

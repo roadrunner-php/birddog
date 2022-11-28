@@ -1,11 +1,16 @@
 let timeout = null
 
 const fetchData = async ($api, commit, server) => {
-  const metrics = await $api.metrics.get(server)
+  const data = await $api.metrics.get(server)
+  const range = {start: data.start, end: data.end}
+  const metrics = data.metrics
+
   if (metrics instanceof Array && metrics.length > 0) {
     commit('setMetrics', metrics)
+    commit('setRange', range)
   } else {
     commit('setMetrics', null)
+    commit('setRange', null)
   }
 }
 
@@ -22,12 +27,16 @@ const refreshPeriodically = ($api, commit, server) => {
 
 export const state = () => ({
   metrics: null,
+  range: null,
   enabled: [],
 })
 
 export const mutations = {
   setMetrics(state, metrics) {
     state.metrics = metrics
+  },
+  setRange(state, range) {
+    state.range = range
   },
   enable(state, metrics) {
     state.enabled.push(metrics)
@@ -43,6 +52,9 @@ export const getters = {
   },
   getMetrics(state) {
     return state.metrics
+  },
+  getRange(state) {
+    return state.range || {start: 0, end: 0}
   },
   hasMetrics(state) {
     return state.metrics !== null
