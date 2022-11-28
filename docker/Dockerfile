@@ -15,8 +15,6 @@ COPY --from=git /app /app
 WORKDIR /app/frontend
 
 ENV NODE_OPTIONS=--openssl-legacy-provider
-ENV API_URL=null
-ENV WS_URL=null
 
 RUN npm install
 RUN npm run generate
