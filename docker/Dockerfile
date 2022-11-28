@@ -2,7 +2,8 @@
 FROM alpine/git as git
 
 ARG REPOSITORY=https://github.com/roadrunner-server/birddog
-RUN git clone $REPOSITORY /app
+ARG BRANCH=master
+RUN git clone -b $BRANCH $REPOSITORY /app
 
 WORKDIR /app/bin
 # Download all required binaries
@@ -34,7 +35,7 @@ RUN composer config --no-plugins allow-plugins.spiral/composer-publish-plugin fa
 RUN composer install --no-dev
 
 RUN echo "Download RoadRunner"
-RUN ./vendor/bin/rr get-binary -s beta
+RUN ./vendor/bin/rr get-binary
 
 WORKDIR /app
 

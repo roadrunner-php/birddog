@@ -7,8 +7,8 @@ namespace App\Centrifuge;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RoadRunner\Centrifugo\Payload\RPCResponse;
-use RoadRunner\Centrifugo\RequestInterface;
-use RoadRunner\Centrifugo\RPCRequest;
+use RoadRunner\Centrifugo\Request\RequestInterface;
+use RoadRunner\Centrifugo\Request\RPC;
 use Spiral\Filters\Exception\ValidationException;
 use Spiral\Http\Http;
 use Spiral\RoadRunnerBridge\Centrifugo\ServiceInterface;
@@ -22,7 +22,7 @@ final class RPCService implements ServiceInterface
     }
 
     /**
-     * @param RPCRequest $request
+     * @param RPC $request
      */
     public function handle(RequestInterface $request): void
     {
@@ -53,7 +53,7 @@ final class RPCService implements ServiceInterface
         }
     }
 
-    public function createHttpRequest(RPCRequest $request): ServerRequestInterface
+    public function createHttpRequest(RPC $request): ServerRequestInterface
     {
         [$method, $uri] = \explode(':', $request->method, 2);
         $method = \strtoupper($method);
@@ -66,8 +66,8 @@ final class RPCService implements ServiceInterface
 //        }
 
         return match ($method) {
-            'GET', 'HEAD' => $httpRequest->withQueryParams($request->data),
-            'POST', 'PUT', 'DELETE' => $httpRequest->withParsedBody($request->data),
+            'GET', 'HEAD' => $httpRequest->withQueryParams($request->getData()),
+            'POST', 'PUT', 'DELETE' => $httpRequest->withParsedBody($request->getData()),
             default => throw new \InvalidArgumentException('Unsupported method'),
         };
     }
