@@ -4,14 +4,28 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\VictoriaMetrics;
 
+use App\Infrastructure\VictoriaMetrics\Payload\Point;
 use App\Infrastructure\VictoriaMetrics\Payload\Range;
 use App\Infrastructure\VictoriaMetrics\Payload\Series;
 use App\Infrastructure\VictoriaMetrics\Payload\Tag;
-use Carbon\Carbon;
 
 interface ClientInterface
 {
     public function put(PointInterface ...$point): void;
+
+
+    /**
+     * Evaluates an expression query over last value.
+     *
+     * @param non-empty-string $metric
+     * @param Tag[] $tags
+     * @return Point[]
+     */
+    public function query(
+        string $metric,
+        ?string $step = null,
+        array $tags = [],
+    ): array;
 
     /**
      * Evaluates an expression query over a range of time.
@@ -34,7 +48,7 @@ interface ClientInterface
      */
     public function series(
         array $tags,
-        \DateTimeInterface $start = new Carbon('-30 minutes'),
-        \DateTimeInterface $end = new Carbon(),
+        \DateTimeInterface $start,
+        \DateTimeInterface $end,
     ): Series;
 }

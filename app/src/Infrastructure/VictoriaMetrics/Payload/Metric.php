@@ -16,11 +16,6 @@ final class Metric implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'id' => \sprintf(
-                '%s{%s}',
-                $this->name,
-                \implode(',', \array_map(fn(Tag $tag) => $tag->name . '=' . $tag->value, $this->tags)),
-            ),
             'name' => $this->name,
             'type' => $this->type,
             'tags' => $this->tags,

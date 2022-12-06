@@ -59,7 +59,7 @@ export default {
 
   bootstrapVue: {
     icons: true,
-    components: ['BDropdown', 'BDropdownItem']
+    components: ['BDropdown', 'BDropdownItem', 'BButton']
   },
 
   build: {}

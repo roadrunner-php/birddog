@@ -1,39 +1,38 @@
 <template>
-  <div class="card">
+  <div class="card border-primary">
     <div class="card-header d-flex justify-content-between">
-      <h6 class="mb-0">New metric</h6>
+      <h6 class="mb-0">New panel</h6>
 
       <div v-if="hasSelected">
-        <button class="btn btn-primary bt-sm" @click="create">
+        <b-button size="sm" variant="primary" @click="create">
           <b-icon icon="plus"/>
           Create
-        </button>
-        <button class="btn border btn-light btn-sm ml-4" @click="clear">
+        </b-button>
+        <b-button size="sm" variant="outline-primary" class="ml-2" @click="clear">
           <b-icon icon="x"/>
           Clear
-        </button>
+        </b-button>
       </div>
-    </div>
-    <div class="card-body p-2" style="max-height: 100px; overflow-y: auto">
-      <small
-        :class="{'badge-primary': enabled(metric), 'badge-light': !enabled(metric) }"
-        style="cursor: pointer"
-        class="badge border"
-        v-for="metric in metrics"
-        @click="toggle(metric)"
-      >
-        {{ metric.name }}
-        <small v-for="tag in metric.tags">
-          {{ tag.name }}={{ tag.value }}
-        </small>
-      </small>
     </div>
 
     <MetricsItem v-if="hasSelected" :server="server" :metric="selected"/>
+    <div class="card-body p-2 d-flex flex-wrap">
+      <MetricsPartialsSelectableMetric
+        class="mr-2 mb-2"
+        v-for="metric in metrics"
+        :metric="metric"
+        :selectedIds="selectedIds"
+        @toggle="toggle"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+function randomString() {
+  return (Math.random() + 1).toString(36).substring(3)
+}
+
 export default {
   props: {
     server: String,
@@ -54,20 +53,34 @@ export default {
     },
     clear() {
       const d = new Date()
-      this.selected = {id: d.getMilliseconds(), metrics: []}
+      this.selected = {id: randomString(), metrics: []}
       this.selectedIds = []
     },
-    toggle(metric) {
-      if (this.enabled(metric)) {
-        this.selected.metrics = this.selected.metrics.filter(m => m.id !== metric.id)
-        this.selectedIds = this.selectedIds.filter(id => id !== metric.id)
+    toggle(name, tag) {
+      let metricId = name
+      if (tag) {
+        metricId = `${name}-{${tag.name}="${tag.value}"}`
+      }
+
+      if (this.enabled(metricId)) {
+        this.selected.metrics = this.selected.metrics.filter(m => m.id !== metricId)
+        this.selectedIds = this.selectedIds.filter(id => id !== metricId)
       } else {
-        this.selected.metrics.push(metric)
-        this.selectedIds.push(metric.id)
+        let tags = []
+        if (tag) {
+          tags = [tag]
+        }
+
+        this.selected.metrics.push({id: metricId, name, tags})
+        this.selectedIds.push(metricId)
       }
     },
-    enabled(metric) {
-      return this.selectedIds.includes(metric.id)
+    enabled(name, tag) {
+      let metricId = name
+      if (tag) {
+        metricId = `${name}-{${tag.name}="${tag.value}"}`
+      }
+      return this.selectedIds.includes(metricId)
     }
   },
   computed: {

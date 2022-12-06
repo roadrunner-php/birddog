@@ -43,7 +43,8 @@ export default function (ctx, inject) {
     get metrics() {
       return {
         get: apiMethods.metricsGet(ctx),
-        getByKey: apiMethods.metricsGetByKey(ctx)
+        getByKey: apiMethods.metricsGetByKey(ctx),
+        getRangeByKey: apiMethods.metricsGetRangeByKey(ctx)
       }
     }
 

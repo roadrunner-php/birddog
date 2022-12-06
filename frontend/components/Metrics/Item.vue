@@ -49,7 +49,7 @@ export default {
           t[tag.name] = tag.value
         }
 
-        const metric = await this.$api.metrics.getByKey(this.server, m.name, t)
+        const metric = await this.$api.metrics.getRangeByKey(this.server, m.name, t)
         metrics.push(metric)
       }
 

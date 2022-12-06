@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Interfaces\HTTP\Controller\Metrics;
 
-use App\Application\Command\Metrics\GetMetricsByKeyQuery;
+use App\Application\Command\Metrics\GetByKeyQuery;
 use App\Infrastructure\VictoriaMetrics\Payload\Tag;
 use Spiral\Cqrs\QueryBusInterface;
 use Spiral\Router\Annotation\Route;
 
-final class GetMetricsByKeyAction
+final class GetByKeyAction
 {
     #[Route('metrics/<key>', name: 'metrics.by_key', methods: 'GET')]
     public function __invoke(QueryBusInterface $bus, MetricsByKeyRequest $request): array
@@ -21,7 +21,7 @@ final class GetMetricsByKeyAction
 
         return [
             'data' => $bus->ask(
-                new GetMetricsByKeyQuery(
+                new GetByKeyQuery(
                     $request->server,
                     $request->key,
                     $tags,

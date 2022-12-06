@@ -63,6 +63,9 @@ const metricsGet = ({$ws}) => async (server) => $ws.rpc(`get:metrics`, {server})
 const metricsGetByKey = ({$ws}) => async (server, key, tags) => $ws.rpc(`get:metrics/${key}`, {server, tag: tags})
   .then((response) => response.data.data)
 
+const metricsGetRangeByKey = ({$ws}) => async (server, key, tags) => $ws.rpc(`get:metrics/${key}/range`, {server, tag: tags})
+  .then((response) => response.data.data)
+
 // Settings
 const settingsGet = ({$ws}) => async () => $ws.rpc(`get:settings`)
   .then((response) => response.data.settings)
@@ -86,6 +89,7 @@ export default {
   versionGet,
   metricsGet,
   metricsGetByKey,
+  metricsGetRangeByKey,
   settingsGet,
   settingsStore
 }

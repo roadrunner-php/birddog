@@ -6,6 +6,7 @@ namespace App\Infrastructure\VictoriaMetrics;
 
 use App\Infrastructure\VictoriaMetrics\Exception\ResponseException;
 use App\Infrastructure\VictoriaMetrics\Payload\Metric;
+use App\Infrastructure\VictoriaMetrics\Payload\Point;
 use App\Infrastructure\VictoriaMetrics\Payload\Range;
 use App\Infrastructure\VictoriaMetrics\Payload\Series;
 use App\Infrastructure\VictoriaMetrics\Payload\Tag;
@@ -34,15 +35,15 @@ final class Client implements ClientInterface
 
     public function series(
         array $tags,
-        \DateTimeInterface $start = new Carbon('-30 minutes'),
+        \DateTimeInterface $start = new Carbon('-5 minutes'),
         \DateTimeInterface $end = new Carbon(),
     ): Series {
         $labels = '';
         if ($tags !== []) {
             $labels .= '{' . \implode(
-                    ',',
-                    \array_map(fn(Tag $tag) => \sprintf('%s="%s"', $tag->name, $tag->value), $tags)
-                ) . '}';
+                ',',
+                \array_map(fn(Tag $tag) => \sprintf('%s="%s"', $tag->name, $tag->value), $tags)
+            ) . '}';
         }
 
         $query = \http_build_query([
@@ -54,29 +55,73 @@ final class Client implements ClientInterface
 
         $metrics = [];
         foreach ($response as $metric) {
-            $tags = [];
-            $type = 'summary';
+            if (!isset($metrics[$metric['__name__']])) {
+                $metrics[$metric['__name__']] = [
+                    'name' => $metric['__name__'],
+                    'tags' => [],
+                    'type' => 'summary',
+                ];
+            }
+
             foreach ($metric as $key => $value) {
                 if ($key === '__name__' || $key === 'server') {
                     continue;
                 }
 
                 if ($key === 'type') {
-                    $type = $value;
+                    $metrics[$metric['__name__']]['type'] = $value;
                     continue;
                 }
 
-                $tags[] = new Tag($key, $value);
+                $metrics[$metric['__name__']]['tags']["$key=$value"] = new Tag($key, $value);
             }
+        }
 
-            $metrics[] = new Metric(
-                name: $metric['__name__'],
-                type: $type,
-                tags: $tags,
+        return new Series(
+            \array_values(
+                \array_map(fn(array $metric): Metric => new Metric(
+                    name: $metric['name'],
+                    type: $metric['type'],
+                    tags: \array_values($metric['tags']),
+                ), $metrics)
+            ), $start, $end
+        );
+    }
+
+    public function query(string $metric, ?string $step = null, array $tags = [],): array
+    {
+        if ($tags !== []) {
+            $metric .= '{' . \implode(
+                    ',',
+                    \array_map(fn(Tag $tag) => \sprintf('%s="%s"', $tag->name, $tag->value), $tags)
+                ) . '}';
+        }
+
+        $query = [
+            'query' => $metric,
+        ];
+
+        if ($step !== null) {
+            $query['step'] = $step;
+        }
+
+        $response = $this->send('GET', 'api/v1/query', $query);
+
+        if (!isset($response['result'][0])) {
+            return null;
+        }
+
+        $points = [];
+
+        foreach ($response['result'] as $metric) {
+            $points[] = new Point(
+                metric: $metric['metric']['__name__'],
+                value: \ctype_digit($metric['value'][1]) ? (int)$metric['value'][1] : (float)$metric['value'][1],
+                tags: $tags
             );
         }
 
-        return new Series($metrics, $start, $end);
+        return $points;
     }
 
     public function queryRange(

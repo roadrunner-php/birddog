@@ -30,7 +30,7 @@ export default {
       let datasets = []
       this.metrics.forEach(metric => {
         let dataset = {
-          label: metric.name,
+          label: metric.id,
           data: [],
           borderWidth: 1,
           borderColor: [
@@ -60,9 +60,13 @@ export default {
       return {
         responsive: true,
         animation: false,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
         elements: {
           point: {
-            radius: 0
+            radius: 2
           }
         }
       }
