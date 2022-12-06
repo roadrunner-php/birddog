@@ -30,8 +30,9 @@ export default {
     {src: '~/plugins/axios.js'},
     {src: '~/plugins/cenrifugo.js'},
     {src: '~/plugins/api.js'},
+    {src: '~/plugins/settings.js'},
+    {src: '~/plugins/chart.js', mode: 'client'},
     {src: '~/plugins/bootstrap.js'},
-    {src: '~/plugins/chart.js', mode: 'client'}
   ],
 
   components: true,

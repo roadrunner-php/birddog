@@ -53,10 +53,21 @@ const servicesRestart = ({$ws}) => async (server, service) => $ws.rpc(`post:serv
 
 // Metrics
 const metricsGet = ({$ws}) => async (server) => $ws.rpc(`get:metrics`, {server})
-  .then((response) => response.data.data)
+  .then((response) => {
+    return {
+      metrics: response.data.data,
+      range: response.data.meta.metrics
+    }
+  })
 
 const metricsGetByKey = ({$ws}) => async (server, key, tags) => $ws.rpc(`get:metrics/${key}`, {server, tag: tags})
   .then((response) => response.data.data)
+
+// Settings
+const settingsGet = ({$ws}) => async () => $ws.rpc(`get:settings`)
+  .then((response) => response.data.settings)
+
+const settingsStore = ({$ws}) => async (settings) => $ws.rpc(`post:settings`, {settings})
 
 export default {
   serversList,
@@ -74,5 +85,7 @@ export default {
   configGet,
   versionGet,
   metricsGet,
-  metricsGetByKey
+  metricsGetByKey,
+  settingsGet,
+  settingsStore
 }

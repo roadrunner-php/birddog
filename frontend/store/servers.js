@@ -8,7 +8,7 @@ export const mutations = {
   setServers(state, servers) {
     state.servers = servers
   },
-  setDefaultServer(state, server) {
+  setDefaultServer(state, {server, persist}) {
     if (state.defaultServer) {
       this.$ws.serverChannel(state.defaultServer).unsubscribe()
     }
@@ -20,6 +20,9 @@ export const mutations = {
     this.dispatch('config/fetchConfig', server)
     this.dispatch('metrics/fetchMetrics', server)
 
+    if (persist) {
+      this.commit('settings/setDefaultServer', server)
+    }
   }
 }
 
@@ -31,6 +34,7 @@ export const getters = {
     if (state.selectedServer === null) {
       return state.defaultServer || state.servers[0] || null
     }
+
     return state.selectedServer
   }
 }
@@ -39,6 +43,8 @@ export const actions = {
   async fetchServers({commit}) {
     const resp = await this.$api.servers.list()
     commit('setServers', resp.servers)
-    commit('setDefaultServer', resp.default)
+
+    const defaultServer = await this.getters['settings/getDefaultServer']
+    commit('setDefaultServer', {server: defaultServer || resp.default})
   }
 }

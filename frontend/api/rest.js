@@ -58,6 +58,12 @@ const metricsGet = ({$axios}) => async (server) => $axios.$get(`/metrics?server=
 const metricsGeByKey = ({$axios}) => async (server, key) => $axios.$get(`/metrics/${key}?server=${server}`)
   .then((response) => response.data)
 
+// Settings
+const settingsGet = ({$axios}) => async () => $axios.$get('settings')
+  .then((response) => response.settings)
+
+const settingsStore = ({$axios}) => async (settings) => $axios.$post('settings', {settings})
+
 export default {
   serversList,
   pluginsList,
@@ -73,5 +79,7 @@ export default {
   serverRegister,
   configGet,
   metricsGet,
-  metricsGeByKey
+  metricsGeByKey,
+  settingsGet,
+  settingsStore
 }

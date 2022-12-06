@@ -46,6 +46,13 @@ export default function (ctx, inject) {
         getByKey: apiMethods.metricsGetByKey(ctx)
       }
     }
+
+    get settings() {
+      return {
+        get: apiMethods.settingsGet(ctx),
+        store: apiMethods.settingsStore(ctx),
+      }
+    }
   }
 
   inject('api', api)

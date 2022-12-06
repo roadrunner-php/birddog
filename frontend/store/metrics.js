@@ -2,7 +2,7 @@ let timeout = null
 
 const fetchData = async ($api, commit, server) => {
   const data = await $api.metrics.get(server)
-  const range = {start: data.start, end: data.end}
+  const range = {start: data.range.start, end: data.range.end}
   const metrics = data.metrics
 
   if (metrics instanceof Array && metrics.length > 0) {
@@ -35,14 +35,19 @@ export const mutations = {
   setMetrics(state, metrics) {
     state.metrics = metrics
   },
+  setEnabledMetrics(state, metrics) {
+    state.enabled = metrics
+  },
   setRange(state, range) {
     state.range = range
   },
   enable(state, metrics) {
     state.enabled.push(metrics)
+    this.commit('settings/updateCharts', state.enabled)
   },
   disable(state, metric) {
     state.enabled = state.enabled.filter((m) => m.id !== metric.id)
+    this.commit('settings/updateCharts', state.enabled)
   }
 }
 
@@ -65,5 +70,8 @@ export const actions = {
   async fetchMetrics({commit}, server) {
     clearTimeout(timeout)
     refreshPeriodically(this.$api, commit, server)
+
+    const enabledMetrics = await this.getters['settings/getCharts']
+    commit('setEnabledMetrics', enabledMetrics || [])
   }
 }

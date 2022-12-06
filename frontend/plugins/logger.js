@@ -1,6 +1,15 @@
+import { white } from 'console-log-colors'
+
+const prefix = white.bgBlue.bold
+
 export class Logger {
-  constructor(mode) {
+  constructor(mode, prefix = '') {
     this.mode = mode
+    this.prefix = prefix
+  }
+
+  withPrefix(prefix) {
+    return new Logger(this.mode, prefix)
   }
 
   debug(...content) {
@@ -18,6 +27,10 @@ export class Logger {
   __log(type, ...content) {
     if (this.mode !== 'development') {
       return
+    }
+
+    if (this.prefix) {
+      content.unshift(prefix(`[${this.prefix}]`))
     }
 
     switch (type) {

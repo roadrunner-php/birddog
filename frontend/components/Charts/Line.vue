@@ -21,8 +21,8 @@ export default {
     },
     metrics: Array,
     height: {
-      type: String,
-      default: '80vh'
+      type: Number,
+      default: 80
     },
   },
   computed: {
