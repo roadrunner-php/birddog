@@ -16,6 +16,7 @@
     "bootstrap-vue": "^2.22.0",
     "centrifuge": "^3.0.1",
     "chart.js": "^3.9.1",
+    "console-log-colors": "^0.3.3",
     "core-js": "^3.25.3",
     "json-to-pretty-yaml": "^1.2.2",
     "nano-date": "^4.1.0",
@@ -25,6 +26,7 @@
     "vue-chartjs": "^4.1.2",
     "vue-loading-overlay": "^3.0",
     "vue-server-renderer": "^2.7.10",
-    "vue-template-compiler": "^2.7.10"
+    "vue-template-compiler": "^2.7.10",
+    "nuxt-lodash": "^2.4.1"
   }
 }

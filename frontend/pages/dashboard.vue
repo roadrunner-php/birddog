@@ -8,7 +8,7 @@
           </NuxtLink>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
-          Config
+          Metrics
         </li>
       </ol>
     </nav>

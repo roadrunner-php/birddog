@@ -11,7 +11,7 @@ return [
     /**
      * Specify a default monolog handler
      */
-    'default' => env('MONOLOG_DEFAULT_CHANNEL', 'stderr'),
+    'default' => env('MONOLOG_DEFAULT_CHANNEL', 'default'),
 
     /**
      * Monolog supports the logging levels described by RFC 5424.
@@ -25,47 +25,9 @@ return [
      */
     'handlers' => [
         'default' => [
-            [
-                'class' => 'log.rotate',
-                'options' => [
-                    'filename' => directory('runtime') . 'logs/app.log',
-                    'level' => Logger::DEBUG,
-                ],
-            ],
-        ],
-        'stderr' => [
-            ErrorLogHandler::class,
-        ],
-        'stdout' => [
-            [
-                'class' => SyslogHandler::class,
-                'options' => [
-                    'ident' => 'app',
-                    'facility' => LOG_USER,
-                ],
-            ],
+            \Spiral\RoadRunnerBridge\Logger\Handler::class,
         ],
     ],
 
-    /**
-     * Processors allows adding extra data for all records.
-     *
-     * @see https://github.com/Seldaek/monolog/blob/main/doc/02-handlers-formatters-processors.md#processors
-     */
-    'processors' => [
-        'default' => [
-            // ...
-        ],
-        'socket' => [
-            \Spiral\Telemetry\Monolog\TelemetryProcessor::class,
-        ],
-        'stdout' => [
-            [
-                'class' => PsrLogMessageProcessor::class,
-                'options' => [
-                    'dateFormat' => 'Y-m-d\TH:i:s.uP',
-                ],
-            ],
-        ],
-    ],
+    'processors' => [],
 ];

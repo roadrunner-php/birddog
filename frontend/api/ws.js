@@ -13,21 +13,21 @@ const serverRegister = ({$ws}) => async (name, address) => $ws.rpc('post:server/
 const configGet = ({$ws}) => async (server) => $ws.rpc(`get:rr/config`, {server})
   .then((response) => response.data.config)
 const versionGet = ({$ws}) => async (server) => $ws.rpc(`get:rr/version`, {server})
-  .then((response) => response.data.version)
+  .then((response) => response.data.version || '0.0.0')
 
 // Plugins
 const pluginsList = ({$ws}) => async (server) => $ws.rpc(`get:plugins`, {server})
-  .then((response) => response.data.data.plugins)
+  .then((response) => response.data.data)
 
 const pluginReset = ({$ws}) => async (server, plugin) => $ws.rpc(`post:plugin/reset`, {server, plugin})
   .then((response) => response.data.status)
 
 const pluginWorkers = ({$ws}) => async (server, plugin) => $ws.rpc(`get:plugin/workers`, {server, plugin})
-  .then((response) => response.data.data.workers || [])
+  .then((response) => response.data.data || [])
 
 // Jobs
 const jobsPipelines = ({$ws}) => async (server) => $ws.rpc(`get:jobs/pipelines`, {server})
-  .then((response) => response.data.pipelines)
+  .then((response) => response.data.data)
 
 const jobsPipelinePause = ({$ws}) => async (server, pipeline) => $ws.rpc(`post:jobs/pipeline/pause`, {
   server,
@@ -53,10 +53,24 @@ const servicesRestart = ({$ws}) => async (server, service) => $ws.rpc(`post:serv
 
 // Metrics
 const metricsGet = ({$ws}) => async (server) => $ws.rpc(`get:metrics`, {server})
-  .then((response) => response.data.data.metrics)
+  .then((response) => {
+    return {
+      metrics: response.data.data,
+      range: response.data.meta.metrics
+    }
+  })
 
 const metricsGetByKey = ({$ws}) => async (server, key, tags) => $ws.rpc(`get:metrics/${key}`, {server, tag: tags})
-  .then((response) => response.data)
+  .then((response) => response.data.data)
+
+const metricsGetRangeByKey = ({$ws}) => async (server, key, tags) => $ws.rpc(`get:metrics/${key}/range`, {server, tag: tags})
+  .then((response) => response.data.data)
+
+// Settings
+const settingsGet = ({$ws}) => async () => $ws.rpc(`get:settings`)
+  .then((response) => response.data.settings)
+
+const settingsStore = ({$ws}) => async (settings) => $ws.rpc(`post:settings`, {settings})
 
 export default {
   serversList,
@@ -74,5 +88,8 @@ export default {
   configGet,
   versionGet,
   metricsGet,
-  metricsGetByKey
+  metricsGetByKey,
+  metricsGetRangeByKey,
+  settingsGet,
+  settingsStore
 }

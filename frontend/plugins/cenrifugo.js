@@ -14,7 +14,7 @@ const subscribe = (client) => client.connect()
 export default async (ctx, inject) => {
   const centrifuge = new Centrifuge(`${WS_URL}`)
 
-  const client = new WsClient(centrifuge, ctx.$logger)
+  const client = new WsClient(centrifuge, ctx.$logger.withPrefix('WS'))
   await subscribe(client)
 
   inject('ws', client)

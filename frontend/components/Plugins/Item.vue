@@ -4,7 +4,7 @@
       <div class="d-flex align-items-center" v-if="showLink">
         <b-icon icon="puzzle" font-scale="1.4"/>
         <h5 class="ml-3 mb-0">
-          <NuxtLink :to="`/plugin/${plugin.name}`" v-if="hasSettings()">
+          <NuxtLink :to="`/plugin/${plugin.name}`" v-if="hasSettings">
             {{ pluginName }} plugin
           </NuxtLink>
           <span v-else>
@@ -16,17 +16,17 @@
           Workers
       </span>
       <div class="d-flex align-items-center">
-        <span class="badge badge-light border mr-2">
-          Workers: <strong>{{ plugin.workers.length }}</strong>
+        <span class="badge border mr-2" :class="{'badge-warning': !hasWorkers, 'badge-light': hasWorkers}">
+          Workers: <strong>{{ totalWorkers }}</strong>
         </span>
         <button class="btn btn-light-outline btn-sm" @click="toggle">
-          <b-icon icon="chevron-up" v-if="open"/>
-          <b-icon icon="chevron-down" v-else="open"/>
+          <b-icon icon="chevron-up" v-if="!isCollapsed"/>
+          <b-icon icon="chevron-down" v-else/>
         </button>
       </div>
     </div>
 
-    <div v-if="open">
+    <div v-if="!isCollapsed">
       <div class="list-group list-group-flush" v-if="hasWorkers">
         <PluginsWorker v-for="worker in sortedWorkers" :worker="worker" :key="worker.pid"/>
       </div>
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   props: {
     server: String,
@@ -56,16 +58,12 @@ export default {
   data() {
     return {
       loading: false,
-      open: true,
       settings: ['jobs', 'service']
     }
   },
   methods: {
     toggle() {
-      this.open = !this.open
-    },
-    hasSettings() {
-      return this.settings.indexOf(this.plugin.name) > -1
+      this.$store.commit('settings/setPluginState', {server: this.server, plugin: this.plugin.name})
     },
     async reset() {
       try {
@@ -75,20 +73,30 @@ export default {
 
         this.$toast.success(`${this.pluginName} workers on server ${this.server} were restarted.`)
         this.$emit('reset')
-      } catch(e) {
+      } catch (e) {
         this.$toast.error(e.message)
       }
     }
   },
   computed: {
+    ...mapState('settings', ['collapsed_plugins']),
+    isCollapsed() {
+      return this.$store.getters['settings/isCollapsedPlugin'](this.server, this.plugin.name)
+    },
+    hasSettings() {
+      return this.settings.indexOf(this.plugin.name) > -1
+    },
     pluginName() {
       return this.plugin.name.capitalize()
     },
+    totalWorkers() {
+      return this.sortedWorkers.length
+    },
     hasWorkers() {
-      return this.plugin.workers.length > 0
+      return this.totalWorkers > 0
     },
     sortedWorkers() {
-      return this.plugin.workers
+      return this.plugin.workers.data
     }
   }
 }

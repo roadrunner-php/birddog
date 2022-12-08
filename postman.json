@@ -114,7 +114,7 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/api/plugins?server=default",
+                            "raw": "{{server}}/api/plugins?server=default&filter[ressetable]=true&sort[pid]=desc",
                             "host": [
                                 "{{server}}"
                             ],
@@ -126,6 +126,14 @@
                                 {
                                     "key": "server",
                                     "value": "default"
+                                },
+                                {
+                                    "key": "filter[ressetable]",
+                                    "value": "true"
+                                },
+                                {
+                                    "key": "sort[pid]",
+                                    "value": "desc"
                                 }
                             ]
                         }
@@ -516,13 +524,39 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/api/config?server=default",
+                            "raw": "{{server}}/api/rr/config?server=default",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
                                 "api",
+                                "rr",
                                 "config"
+                            ],
+                            "query": [
+                                {
+                                    "key": "server",
+                                    "value": "default"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Version.get",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{server}}/api/rr/version?server=default",
+                            "host": [
+                                "{{server}}"
+                            ],
+                            "path": [
+                                "api",
+                                "rr",
+                                "version"
                             ],
                             "query": [
                                 {
@@ -564,6 +598,43 @@
                     "response": []
                 },
                 {
+                    "name": "Metrics.range.getByKey",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    ""
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{server}}/api/metrics/go_threads/range?server=default",
+                            "host": [
+                                "{{server}}"
+                            ],
+                            "path": [
+                                "api",
+                                "metrics",
+                                "go_threads",
+                                "range"
+                            ],
+                            "query": [
+                                {
+                                    "key": "server",
+                                    "value": "default"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
                     "name": "Metrics.getByKey",
                     "event": [
                         {
@@ -580,20 +651,75 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{server}}/api/metrics/go_threads?server=default",
+                            "raw": "{{server}}/api/metrics/go_gc_duration_seconds?server=default&tag[quantile]=0",
                             "host": [
                                 "{{server}}"
                             ],
                             "path": [
                                 "api",
                                 "metrics",
-                                "go_threads"
+                                "go_gc_duration_seconds"
                             ],
                             "query": [
                                 {
                                     "key": "server",
                                     "value": "default"
+                                },
+                                {
+                                    "key": "tag[quantile]",
+                                    "value": "0"
                                 }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Settings",
+            "item": [
+                {
+                    "name": "Settings.get",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{server}}/api/settings",
+                            "host": [
+                                "{{server}}"
+                            ],
+                            "path": [
+                                "api",
+                                "settings"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Settings.store",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "settings[foo]",
+                                    "value": "bar",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{server}}/api/settings",
+                            "host": [
+                                "{{server}}"
+                            ],
+                            "path": [
+                                "api",
+                                "settings"
                             ]
                         }
                     },

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Centrifuge\ConnectService;
-use App\Centrifuge\RPCService;
-use App\Centrifuge\SubscribeService;
+use App\Centrifuge\Interceptor;
+use App\Interfaces\Centrifuge\ConnectService;
+use App\Interfaces\Centrifuge\RPCService;
+use App\Interfaces\Centrifuge\SubscribeService;
 use RoadRunner\Centrifugo\Request\RequestType;
 
 $interceptors = [
