@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Interfaces\HTTP\Controller;
 
 use App\Infrastructure\RPC\ServersRegistryInterface;
+use App\Infrastructure\RPC\ValueObject\Server;
 use Spiral\Filters\Attribute\Input\Query;
 use Spiral\Filters\Model\Filter;
 use Spiral\Filters\Model\FilterDefinitionInterface;
@@ -24,7 +25,12 @@ abstract class AbstractServerFilter extends Filter implements HasFilterDefinitio
     protected function getValidationRules(): array
     {
         return [
-            'server' => $this->serverRules($this->registry->getServersNames()),
+            'server' => $this->serverRules(
+                \array_map(
+                    fn(Server $server): string => $server->getName(),
+                    $this->registry->getServers(),
+                ),
+            ),
         ];
     }
 

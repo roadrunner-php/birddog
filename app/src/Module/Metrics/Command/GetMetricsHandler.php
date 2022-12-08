@@ -28,7 +28,7 @@ final class GetMetricsHandler
     #[QueryHandler]
     public function handle(GetMetricsQuery $query): array
     {
-        $server = $this->registry->getServerAddress($query->server);
+        $server = $this->registry->getServer($query->server);
 
         try {
             $config = $this->queryBus->ask(new GetConfigQuery($query->server));
@@ -40,7 +40,7 @@ final class GetMetricsHandler
             $scheme = isset($config['http']['ssl']) ? 'https' : 'http';
 
             $host  = (new Uri($config['metrics']['address']))
-                ->withHost($server->getHost())
+                ->withHost($server->getAddress()->getHost())
                 ->withScheme($scheme);
 
             $response = $this->client->request('GET', (string)$host);

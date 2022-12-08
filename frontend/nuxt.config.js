@@ -48,6 +48,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     'bootstrap-vue/nuxt',
+    'nuxt-lodash'
   ],
 
   toast: {

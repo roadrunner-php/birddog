@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\RPC;
 
+use App\Infrastructure\RPC\ValueObject\Server;
 use Spiral\Goridge\RPC\Codec\ProtobufCodec;
 use Spiral\Goridge\RPC\CodecInterface;
 use Spiral\Goridge\RPC\RPC;
@@ -18,8 +19,11 @@ final class RPCManager implements RPCManagerInterface
 
     public function getServer(string $server, ?CodecInterface $codec = null): RPCInterface
     {
-        $address = (string)$this->registry->getServerAddress($server) ?? $server;
+        $server = $this->registry->getServer($server) ?? new Server($server, $server);
 
-        return RPC::create($address)->withCodec($codec ?? new ProtobufCodec());
+        return new RPC(
+            $server->getRelay(),
+            $codec ?? new ProtobufCodec()
+        );
     }
 }

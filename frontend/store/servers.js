@@ -1,3 +1,5 @@
+import {get as getObjectValue} from 'lodash'
+
 export const state = () => ({
   servers: [],
   selectedServer: null,
@@ -32,7 +34,7 @@ export const getters = {
   },
   getDefaultServer(state) {
     if (state.selectedServer === null) {
-      return state.defaultServer || state.servers[0] || null
+      return state.defaultServer || getObjectValue(state.servers, '0.name') || null
     }
 
     return state.selectedServer

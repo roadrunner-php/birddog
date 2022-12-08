@@ -1,7 +1,8 @@
 <template>
   <div class="flex-fill">
     <div class="card shadow-sm position-relative" v-if="hasMetrics">
-      <button class="btn btn-light-outline btn-sm position-absolute" style="top: 0; right: 0" @click="disable">
+      <button class="btn btn-light-outline btn-sm position-absolute" style="top: 0; right: 0" @click="disable"
+              v-if="showCloseButton">
         <b-icon icon="x"/>
       </button>
       <div class="py-2 pl-2">
@@ -21,7 +22,11 @@ export default {
   mixins: [PeriodicallyTimer],
   props: {
     server: String,
-    metric: Object
+    metric: Object,
+    showCloseButton: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {

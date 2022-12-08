@@ -1,27 +1,32 @@
 <template>
   <div class="card border-primary">
     <div class="card-header d-flex justify-content-between">
-      <h6 class="mb-0">New panel</h6>
+      <h6 class="mb-0">Create chart</h6>
 
       <div v-if="hasSelected">
         <b-button size="sm" variant="primary" @click="create">
           <b-icon icon="plus"/>
           Create
         </b-button>
-        <b-button size="sm" variant="outline-primary" class="ml-2" @click="clear">
+        <b-button size="sm" variant="outline-danger" class="ml-2" @click="clear">
           <b-icon icon="x"/>
           Clear
         </b-button>
       </div>
     </div>
 
-    <MetricsItem v-if="hasSelected" :server="server" :metric="selected"/>
+    <MetricsItem v-if="hasSelected"
+                 :server="server"
+                 :metric="selected"
+                 :showCloseButton="false"
+    />
+
     <div class="card-body p-2 d-flex flex-wrap">
       <MetricsPartialsSelectableMetric
         class="mr-2 mb-2"
         v-for="metric in metrics"
+        :key="metric.name"
         :metric="metric"
-        :selectedIds="selectedIds"
         @toggle="toggle"
       />
     </div>

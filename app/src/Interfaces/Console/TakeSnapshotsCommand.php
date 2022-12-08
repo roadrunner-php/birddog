@@ -37,7 +37,7 @@ final class TakeSnapshotsCommand extends Command
                 $points = [];
 
                 /** @var array<non-empty-string, MetricDataNode> $metrics */
-                $metrics = $queryBus->ask(new GetMetricsQuery($server));
+                $metrics = $queryBus->ask(new GetMetricsQuery($server->getName()));
 
                 foreach ($metrics as $key => $metricNode) {
                     foreach ($metricNode->metrics as $metric) {
@@ -46,7 +46,7 @@ final class TakeSnapshotsCommand extends Command
                             $metric->value,
                         );
 
-                        $point->addTag(new Tag('server', $server));
+                        $point->addTag(new Tag('server', $server->getName()));
                         $point->addTag(new Tag('type', $metricNode->type));
 
                         foreach ($metric->labels as $label) {

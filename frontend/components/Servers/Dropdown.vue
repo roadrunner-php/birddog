@@ -16,10 +16,10 @@
 
       <b-dropdown-item
         v-for="server in servers"
-        :key="server"
+        :key="server.name"
         @click="selectServer(server)"
       >
-        {{ server }}
+        {{ server.name }}
       </b-dropdown-item>
     </b-dropdown>
     <div v-else>
@@ -35,7 +35,7 @@
 export default {
   methods: {
     selectServer(server) {
-      this.$store.commit('servers/setDefaultServer', {server, persist: true});
+      this.$store.commit('servers/setDefaultServer', {server: server.name, persist: true});
     }
   },
   mounted() {

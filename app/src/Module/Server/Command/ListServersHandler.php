@@ -19,7 +19,7 @@ final class ListServersHandler
     public function __invoke(ListQuery $query): array
     {
         return [
-            'servers' => $this->registry->getServersNames(),
+            'servers' => $this->registry->getServers(),
         ];
     }
 }

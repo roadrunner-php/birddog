@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\RPC;
 
-use Psr\Http\Message\UriInterface;
+use App\Infrastructure\RPC\ValueObject\Server;
 
 interface ServersRegistryInterface
 {
@@ -15,9 +15,9 @@ interface ServersRegistryInterface
     public function addServer(string $name, string $host): void;
 
     /**
-     * @return non-empty-string[]
+     * @return Server[]
      */
-    public function getServersNames(): array;
+    public function getServers(): array;
 
-    public function getServerAddress(string $name): ?UriInterface;
+    public function getServer(string $name): ?Server;
 }
