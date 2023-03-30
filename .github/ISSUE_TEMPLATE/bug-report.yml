@@ -26,10 +26,13 @@ body:
       label: How to reproduce the issue?
       description: Steps on how to reproduce the issue?
 
-  - type: textarea
+  - type: dropdown
     id: version
     attributes:
       label: Version
       description: What version of our software are you running?
-      placeholder: 1.0.0
-      value: "0.4.0"
+      options:
+        - 0.4.0 (Default)
+        - dev
+    validations:
+      required: true
