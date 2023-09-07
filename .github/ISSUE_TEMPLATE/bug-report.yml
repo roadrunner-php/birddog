@@ -10,14 +10,6 @@ body:
       value: |
         Thanks for taking the time to fill out this bug report!
 
-  - type: checkboxes
-    id: search-done
-    attributes:
-      label: No duplicates 🥲.
-      options:
-        - label: I have searched for a similar issue in our bug tracker and didn't find any solutions.
-          required: true
-          
   - type: textarea
     id: what-happened
     attributes:
@@ -27,27 +19,20 @@ body:
       value: "A bug happened!"
     validations:
       required: true
-      
-  - type: textarea
-    id: version
-    attributes:
-      label: Version
-      description: What version of our software are you running?
-      placeholder: 1.0.0
-    validations:
-      required: true
-      
+
   - type: textarea
     id: repro
     attributes:
       label: How to reproduce the issue?
       description: Steps on how to reproduce the issue?
+
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: What version of our software are you running?
+      options:
+        - 0.4.0 (Default)
+        - dev
     validations:
       required: true
-      
-  - type: textarea
-    id: logs
-    attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
-      render: shell

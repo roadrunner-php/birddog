@@ -10,13 +10,6 @@ body:
       value: |
         Thanks for taking the time to fill out this report!
 
-  - type: checkboxes
-    id: search-done
-    attributes:
-      label: No duplicates 🥲.
-      options:
-        - label: I have searched for a similar issue.
-          required: true
   - type: textarea
     id: what-happened
     attributes:
