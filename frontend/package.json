@@ -12,7 +12,7 @@
     "@nuxtjs/axios": "^5.13",
     "@nuxtjs/moment": "^1.6.1",
     "@nuxtjs/toast": "^3.3.1",
-    "bootstrap": "^4.6.2",
+    "bootstrap": "^5.3.2",
     "bootstrap-vue": "^2.22.0",
     "centrifuge": "^3.0.1",
     "chart.js": "^3.9.1",

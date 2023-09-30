@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Application\Command\Service;
 
+use App\Application\Command\Service\DTO\RestartResult;
 use Spiral\Cqrs\CommandInterface;
 
-final class RestartCommand implements CommandInterface
+/**
+ * @implements CommandInterface<RestartResult>
+ */
+final readonly class RestartCommand implements CommandInterface
 {
     public function __construct(
-        public readonly string $server,
-        public readonly string $service,
+        public string $server,
+        public string $service,
     ) {
     }
 }

@@ -6,7 +6,7 @@ namespace App\Module\Metrics\Command;
 
 use App\Application\Command\Metrics\GetMetricsQuery;
 use App\Application\Command\RoadRunner\GetConfigQuery;
-use App\Infrastructure\RPC\ServersRegistryInterface;
+use App\Domain\Server\Service\ServersRepositoryInterface;
 use Butschster\Prometheus\Parser;
 use Nyholm\Psr7\Uri;
 use Spiral\Cqrs\Attribute\QueryHandler;
@@ -14,21 +14,21 @@ use Spiral\Cqrs\QueryBusInterface;
 use Spiral\Exceptions\ExceptionReporterInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final class GetMetricsHandler
+final readonly class GetMetricsHandler
 {
     public function __construct(
-        private readonly QueryBusInterface $queryBus,
-        private readonly HttpClientInterface $client,
-        private readonly ServersRegistryInterface $registry,
-        private readonly Parser $parser,
-        private readonly ExceptionReporterInterface $reporter
+        private QueryBusInterface $queryBus,
+        private HttpClientInterface $client,
+        private ServersRepositoryInterface $servers,
+        private Parser $parser,
+        private ExceptionReporterInterface $reporter
     ) {
     }
 
     #[QueryHandler]
     public function handle(GetMetricsQuery $query): array
     {
-        $server = $this->registry->getServer($query->server);
+        $server = $this->servers->getServer($query->server);
 
         try {
             $config = $this->queryBus->ask(new GetConfigQuery($query->server));
@@ -39,8 +39,8 @@ final class GetMetricsHandler
 
             $scheme = isset($config['http']['ssl']) ? 'https' : 'http';
 
-            $host  = (new Uri($config['metrics']['address']))
-                ->withHost($server->getAddress()->getHost())
+            $host = (new Uri($config['metrics']['address']))
+                ->withHost($server->address->getHost())
                 ->withScheme($scheme);
 
             $response = $this->client->request('GET', (string)$host);

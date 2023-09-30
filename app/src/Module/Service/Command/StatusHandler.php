@@ -4,37 +4,40 @@ declare(strict_types=1);
 
 namespace App\Module\Service\Command;
 
-use App\Application\Command\RoadRunner\GetVersionQuery;
+use App\Application\Command\Service\DTO\StatusResult;
 use App\Application\Command\Service\StatusQuery;
-use App\Infrastructure\RPC\RPCManagerInterface;
+use App\Infrastructure\RoadRunner\RPC\RPCManagerInterface;
+use App\Module\Service\Command\DTO\Status;
 use Spiral\Cqrs\Attribute\QueryHandler;
-use Spiral\Cqrs\QueryBusInterface;
 use Spiral\RoadRunner\Services\Manager;
 
-final class StatusHandler
+final readonly class StatusHandler
 {
     public function __construct(
-        private readonly RPCManagerInterface $rpc,
-        private readonly QueryBusInterface $queryBus
+        private RPCManagerInterface $rpc,
     ) {
     }
 
     #[QueryHandler]
-    public function __invoke(StatusQuery $query): array
+    public function __invoke(StatusQuery $query): StatusResult
     {
-        $version = $this->queryBus->ask(new GetVersionQuery($query->server))['version'];
-        $manager = new Manager($this->rpc->getServer($query->server));
+        $manager = new Manager($this->rpc->connect($query->server)->getRpc());
 
-        if ($version === null) {
-            $status = $manager->status($query->service);
-            $status['error'] = null;
-            $statuses = [$status];
-        } else {
-            $statuses = $manager->statuses($query->service);
-        }
+        $statuses = \array_map(
+            static fn(array $status): Status => new Status(
+                command: $status['command'],
+                cpuPercent: $status['cpu_percent'],
+                memoryUsage: $status['memory_usage'],
+                pid: $status['pid'],
+                error: $status['error']['message'] ?? null,
+            ),
+            $manager->statuses($query->service),
+        );
 
-        return [
-            'statuses' => $statuses,
-        ];
+        return new StatusResult(
+            server: $query->server,
+            service: $query->service,
+            statuses: $statuses,
+        );
     }
 }

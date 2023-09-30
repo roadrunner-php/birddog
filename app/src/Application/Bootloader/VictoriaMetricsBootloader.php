@@ -12,13 +12,16 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class VictoriaMetricsBootloader extends Bootloader
 {
-    protected const SINGLETONS = [
-        ClientInterface::class => [self::class, 'initClient'],
-    ];
+    public function defineSingletons(): array
+    {
+        return [
+            ClientInterface::class => [self::class, 'initClient'],
+        ];
+    }
 
     private function initClient(
         HttpClientInterface $client,
-        EnvironmentInterface $env
+        EnvironmentInterface $env,
     ): ClientInterface {
         $headers = [
             'content-type' => 'application/json',

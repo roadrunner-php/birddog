@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace App\Application\Command\Jobs;
 
+use App\Application\Command\Jobs\DTO\PipelineListResult;
 use Spiral\Cqrs\QueryInterface;
 
 /**
  * Get all created jobs plugin pipelines.
+ * @implements QueryInterface<PipelineListResult>
  */
-final class PipelineListQuery implements QueryInterface
+final readonly class PipelineListQuery implements QueryInterface
 {
     public function __construct(
-        public readonly string $server
+        public string $server
     ) {
     }
 }

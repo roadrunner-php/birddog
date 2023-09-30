@@ -8,8 +8,8 @@
     >
       <template #button-content>
         <span v-if="defaultServer">
-          <b-icon icon="broadcast-pin" class="mr-2" font-scale="1.5"/>
-          <small>Server</small> <strong>{{ defaultServer }}</strong>
+          <b-icon icon="broadcast-pin" class="me-2" font-scale="1.5"/>
+          <small class="me-2">Server</small> <strong class="ms-2">{{ defaultServer }}</strong>
         </span>
         <span v-else>Select server</span>
       </template>
@@ -23,9 +23,9 @@
       </b-dropdown-item>
     </b-dropdown>
     <div v-else>
-      <span class="badge badge-primary d-flex align-items-center p-2">
-        <b-icon icon="broadcast-pin" class="mr-2" font-scale="1.5"/>
-        Server <strong class="ml-1">{{ defaultServer }}</strong>
+      <span class="badge d-flex align-items-center px-3 py-2">
+        <b-icon icon="broadcast-pin" class="me-2" font-scale="1.5"/>
+        Server <strong class="ms-1">{{ defaultServer }}</strong>
       </span>
     </div>
   </div>

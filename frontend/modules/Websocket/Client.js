@@ -1,5 +1,6 @@
 import Centrifuge from 'centrifuge'
 import Channel from './Channel'
+import Vue from 'vue'
 
 export class WsClient {
   channels = {}
@@ -41,6 +42,10 @@ export class WsClient {
     this.centrifuge.on('disconnected', (context) => {
       this.logger.debug('disconnected from Centrifugo', context)
     })
+
+    this.centrifuge.on('subscribed', function(context) {
+      console.log('subscribed', context)
+    });
 
     this.centrifuge.connect()
 

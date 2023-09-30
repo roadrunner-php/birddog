@@ -12,10 +12,10 @@ use Spiral\Goridge\RPC\Exception\ServiceException;
 use Spiral\Http\ResponseWrapper;
 use Spiral\RoadRunner\Jobs\Exception\JobsException;
 
-final class HandleRPCExceptionsMiddleware implements MiddlewareInterface
+final readonly class HandleRPCExceptionsMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private readonly ResponseWrapper $wrapper
+        private ResponseWrapper $wrapper
     ) {
     }
 

@@ -4,29 +4,33 @@ declare(strict_types=1);
 
 namespace App\Module\RoadRunner\Command;
 
+use App\Application\Command\RoadRunner\DTO\GetConfigResult;
 use App\Application\Command\RoadRunner\GetConfigQuery;
-use App\Infrastructure\RPC\RPCManagerInterface;
+use App\Infrastructure\RoadRunner\RPC\RPCManagerInterface;
 use Spiral\Cqrs\Attribute\QueryHandler;
-use Spiral\Goridge\RPC\Codec\JsonCodec;
+use Spiral\Exceptions\ExceptionReporterInterface;
 
-final class GetConfigHandler
+final readonly class GetConfigHandler
 {
     public function __construct(
-        private readonly RPCManagerInterface $rpc,
+        private RPCManagerInterface $rpc,
+        private ExceptionReporterInterface $reporter,
     ) {
     }
 
     #[QueryHandler]
-    public function __invoke(GetConfigQuery $query): array
+    public function __invoke(GetConfigQuery $query): GetConfigResult
     {
-        $rpc = $this->rpc->getServer($query->server, new JsonCodec());
-
         try {
-            $config = $rpc->call('rpc.Config', true);
-
-            return \json_decode(\base64_decode($config), true);
+            $config = $this->rpc->connect($query->server)->getConfig();
         } catch (\Throwable $e) {
-            return [];
+            $this->reporter->report($e);
+            $config = [];
         }
+
+        return new GetConfigResult(
+            server: $query->server,
+            config: $config,
+        );
     }
 }

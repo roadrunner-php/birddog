@@ -13,13 +13,13 @@ export default {
       clearTimeout(this.timeout)
     },
     refreshPeriodically() {
-      Promise.all([
-        this.fetchData(),
-      ]).then(() => {
-        this.timeout = setTimeout(() => {
-          this.refreshPeriodically();
-        }, this.refreshTimeout || 5000);
-      });
+      // Promise.all([
+        this.fetchData()
+      // ]).then(() => {
+      //   this.timeout = setTimeout(() => {
+      //     this.refreshPeriodically();
+      //   }, this.refreshTimeout || 5000);
+      // });
     }
   }
 }

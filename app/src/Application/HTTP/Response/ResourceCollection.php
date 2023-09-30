@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Application\HTTP\Response;
 
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Spiral\DataGrid\GridInterface;
 use Spiral\Http\Traits\JsonTrait;
 
@@ -13,21 +12,25 @@ class ResourceCollection implements ResourceInterface
 {
     use JsonTrait;
 
+    private readonly array $args;
+
     /**
-     * @param class-string<ResourceInterface> $resourceClass
+     * @param class-string<ResourceInterface>|\Closure $resource
      */
     public function __construct(
         protected readonly iterable $data,
-        protected string $resourceClass = JsonResource::class
+        protected string|\Closure $resource = JsonResource::class,
+        mixed ...$args
     ) {
+        $this->args = $args;
     }
 
     /**
-     * @return class-string<ResourceInterface>
+     * @return class-string<ResourceInterface>|\Closure
      */
-    protected function getResourceClass(): string
+    protected function getResource(): string|\Closure
     {
-        return $this->resourceClass;
+        return $this->resource;
     }
 
     protected function getData(): iterable
@@ -35,21 +38,28 @@ class ResourceCollection implements ResourceInterface
         return $this->data;
     }
 
-    public function resolve(ServerRequestInterface $request): array
+    public function jsonSerialize(): array
     {
         $data = [];
-        $resourceClass = $this->getResourceClass();
+        $resource = $this->getResource();
 
         foreach ($this->getData() as $key => $row) {
-            $data[$key] = (new $resourceClass($row))->resolve($request);
+            if (\is_string($resource)) {
+                $resource = static fn(mixed $row, mixed ...$args): ResourceInterface => new $resource($row, ...$args);
+            } elseif (!\is_callable($resource) && $row instanceof \JsonSerializable) {
+                $data[$key] = $row;
+                continue;
+            }
+
+            $data[$key] = $resource($row, ...$this->args);
         }
 
         return $this->wrapData($data);
     }
 
-    public function toResponse(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function toResponse(ResponseInterface $response): ResponseInterface
     {
-        return $this->writeJson($response, $this->resolve($request));
+        return $this->writeJson($response, $this);
     }
 
     protected function wrapData(array $data): array
@@ -68,5 +78,10 @@ class ResourceCollection implements ResourceInterface
                 'grid' => $grid,
             ],
         ];
+    }
+
+    public function __toString(): string
+    {
+        return \json_encode($this->jsonSerialize(), \JSON_THROW_ON_ERROR);
     }
 }

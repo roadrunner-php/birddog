@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Bootloader;
 
 use Spiral\Boot\Bootloader\Bootloader;
-use Spiral\Exceptions\ExceptionHandlerInterface;
+use Spiral\Exceptions\ExceptionHandler;
 use Spiral\Exceptions\Reporter\FileReporter;
 use Spiral\Exceptions\Reporter\LoggerReporter;
 use Spiral\Http\ErrorHandler\PlainRenderer;
@@ -15,13 +15,16 @@ use Spiral\Http\Middleware\ErrorHandlerMiddleware\SuppressErrorsInterface;
 
 final class ExceptionHandlerBootloader extends Bootloader
 {
-    protected const BINDINGS = [
-        SuppressErrorsInterface::class => EnvSuppressErrors::class,
-        RendererInterface::class => PlainRenderer::class,
-    ];
+    public function defineBindings(): array
+    {
+        return [
+            SuppressErrorsInterface::class => EnvSuppressErrors::class,
+            RendererInterface::class => PlainRenderer::class,
+        ];
+    }
 
     public function boot(
-        ExceptionHandlerInterface $handler,
+        ExceptionHandler $handler,
         LoggerReporter $logger,
         FileReporter $files
     ): void {

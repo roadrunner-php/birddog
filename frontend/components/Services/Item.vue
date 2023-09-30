@@ -2,24 +2,22 @@
   <div class="card">
     <UILoading :active="loading"/>
     <div class="card-header">
-      <div class="d-flex justify-content-between align-items-start">
-        <div>
+      <div class="d-flex flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between align-items-center">
           <h6 class="d-flex align-items-center">
-            <b-icon icon="hdd-network" font-scale="1.5" class="mr-3"/>
+            <b-icon icon="hdd-network" font-scale="1.5" class="me-3"/>
             <strong>{{ name }}</strong>
           </h6>
-          <span v-if="command" class="badge border bg-light mt-2">Command: <strong>{{ command }}</strong></span>
+
+          <button type="button" class="btn btn-sm btn-danger ms-2" @click.prevent="restart" title="Restart service">
+            <b-icon icon="arrow-clockwise"/>
+          </button>
         </div>
+        <span v-if="command" class="badge border bg-dark mt-2">Command: <strong>{{ command }}</strong></span>
       </div>
     </div>
     <div class="list-group list-group-flush" v-if="hasStatuses">
       <ServicesStatus :service="status" :key="status.pid" v-for="status in statuses"/>
-    </div>
-    <div class="card-footer p-2">
-      <button type="button" class="btn btn-sm btn-danger ml-2" @click.prevent="restart">
-        <b-icon icon="arrow-clockwise"/>
-        Restart
-      </button>
     </div>
   </div>
 </template>

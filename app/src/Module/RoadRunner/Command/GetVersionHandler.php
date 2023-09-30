@@ -4,29 +4,32 @@ declare(strict_types=1);
 
 namespace App\Module\RoadRunner\Command;
 
+use App\Application\Command\RoadRunner\DTO\GetVersionResult;
 use App\Application\Command\RoadRunner\GetVersionQuery;
-use App\Infrastructure\RPC\RPCManagerInterface;
+use App\Infrastructure\RoadRunner\RPC\RPCManagerInterface;
 use Spiral\Cqrs\Attribute\QueryHandler;
-use Spiral\Goridge\RPC\Codec\JsonCodec;
 
-final class GetVersionHandler
+final readonly class GetVersionHandler
 {
     public function __construct(
-        private readonly RPCManagerInterface $rpc,
+        private RPCManagerInterface $rpc,
     ) {
     }
 
     #[QueryHandler]
-    public function __invoke(GetVersionQuery $query): array
+    public function __invoke(GetVersionQuery $query): GetVersionResult
     {
-        $rpc = $this->rpc->getServer($query->server, new JsonCodec());
+        $rpc = $this->rpc->connect($query->server);
 
         try {
-            $version = $rpc->call('rpc.Version', true);
-        } catch (\Throwable $e) {
-            $version = null;
+            $version = $rpc->getVersion();
+        } catch (\Throwable) {
+            $version = '0.0.0';
         }
 
-        return compact('version');
+        return new GetVersionResult(
+            server: $query->server,
+            version: $version,
+        );
     }
 }

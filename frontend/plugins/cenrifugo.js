@@ -7,9 +7,6 @@ const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
 const WS_URL = process.env.WS_URL || `${wsProtocol}://${host}/connection/websocket`
 
 const subscribe = (client) => client.connect()
-  .then(ctx => {
-    client.channel('public')
-  })
 
 export default async (ctx, inject) => {
   const centrifuge = new Centrifuge(`${WS_URL}`)

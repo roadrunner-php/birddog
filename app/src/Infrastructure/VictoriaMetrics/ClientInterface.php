@@ -8,6 +8,7 @@ use App\Infrastructure\VictoriaMetrics\Payload\Point;
 use App\Infrastructure\VictoriaMetrics\Payload\Range;
 use App\Infrastructure\VictoriaMetrics\Payload\Series;
 use App\Infrastructure\VictoriaMetrics\Payload\Tag;
+use Carbon\Carbon;
 
 interface ClientInterface
 {
@@ -35,9 +36,9 @@ interface ClientInterface
      */
     public function queryRange(
         string $metric,
-        float $step,
-        \DateTimeInterface $start,
-        \DateTimeInterface $end,
+        float $step = 5,
+        \DateTimeInterface $start = new Carbon('-30 minutes'),
+        \DateTimeInterface $end = new Carbon(),
         array $tags = [],
     ): Range;
 
@@ -48,7 +49,7 @@ interface ClientInterface
      */
     public function series(
         array $tags,
-        \DateTimeInterface $start,
-        \DateTimeInterface $end,
+        \DateTimeInterface $start = new Carbon('-5 minutes'),
+        \DateTimeInterface $end = new Carbon(),
     ): Series;
 }

@@ -8,10 +8,10 @@ use Psr\Log\LoggerInterface;
 use Spiral\Core\CoreInterceptorInterface;
 use Spiral\Core\CoreInterface;
 
-final class LoggingInterceptor implements CoreInterceptorInterface
+final readonly class LoggingInterceptor implements CoreInterceptorInterface
 {
     public function __construct(
-        private readonly LoggerInterface $logger,
+        private LoggerInterface $logger,
     ) {
     }
 

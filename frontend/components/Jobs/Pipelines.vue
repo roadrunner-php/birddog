@@ -2,7 +2,6 @@
   <div>
     <div v-if="hasPipelines" class="list-group">
       <h4 class="mb-4">Pipelines</h4>
-
       <JobsPipeline
         class="mb-5"
         :pipeline="pipeline"
@@ -12,7 +11,6 @@
         @paused="onPause"
         @resumed="onResume"/>
     </div>
-
     <UIWarningMessage v-else>
       There are no available Jobs pipelines on <strong>{{ server }}</strong> server.
     </UIWarningMessage>

@@ -6,7 +6,10 @@
         :plugin="plugin"
         v-for="plugin in plugins"
         :key="plugin.name"
-        @reset="onReset"/>
+        @reset="onReset"
+        @addedWorker="onWorkerAdded"
+        @removedWorker="onWorkerRemoved"
+      />
     </div>
     <UIWarningMessage v-else>
       There are no available plugins on <strong>{{ server }}</strong> server.
@@ -28,6 +31,12 @@ export default {
   },
   methods: {
     onReset() {
+      this.fetchData()
+    },
+    onWorkerAdded() {
+      this.fetchData()
+    },
+    onWorkerRemoved() {
       this.fetchData()
     },
     async fetchData() {

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Application\Centrifuge\Channel;
 
-class Channel implements \Stringable
+readonly class Channel implements \Stringable
 {
     public function __construct(
-        public readonly string $name
+        public string $name,
     ) {
     }
 

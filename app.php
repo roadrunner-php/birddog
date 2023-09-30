@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Application\App;
+use App\Application\Kernel;
 
 // If you forgot to configure some of this in your php.ini file,
 // then don't worry, we will set the standard environment
@@ -17,7 +17,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 
 // Initialize shared container, bindings, directories and etc.
-$app = App::create(
+$app = Kernel::create(
     directories: ['root' => __DIR__]
 )->run();
 

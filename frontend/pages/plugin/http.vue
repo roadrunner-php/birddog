@@ -14,7 +14,7 @@
     </nav>
 
     <h4 class="mb-4 d-flex align-items-center">
-      <b-icon icon="puzzle" font-scale="1.4" class="mr-3"/> Http plugin
+      <b-icon icon="puzzle" font-scale="1.4" class="me-3"/> Http plugin
     </h4>
 
     <PluginsItem :server="server" :plugin="plugin" :showLink="false"/>
@@ -60,7 +60,7 @@ export default {
       return {
         name: 'http',
         workers: this.workers,
-        is_ressetable: true
+        is_resettable: true
       }
     },
     server() {

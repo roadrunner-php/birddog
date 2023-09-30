@@ -6,37 +6,32 @@ namespace App\Application\HTTP\Response;
 
 use JsonSerializable;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Spiral\Http\Traits\JsonTrait;
 
-class JsonResource implements ResourceInterface, \ArrayAccess
+class JsonResource implements ResourceInterface
 {
     use JsonTrait;
 
-    public function __construct(
-        protected readonly array|JsonSerializable $data
-    ) {
+    protected readonly mixed $data;
+
+    public function __construct(mixed $data = [])
+    {
+        $this->data = $data;
     }
 
-    protected function mapData(ServerRequestInterface $request): array|JsonSerializable
+    protected function mapData(): array|JsonSerializable
     {
         return $this->data;
     }
 
-    public function resolve(ServerRequestInterface $request): array
+    protected function getCode(): int
     {
-        $data = $this->mapData($request);
-
-        if ($data instanceof JsonSerializable) {
-            $data = $data->jsonSerialize();
-        }
-
-        return $this->wrapData($data);
+        return 200;
     }
 
-    public function toResponse(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function toResponse(ResponseInterface $response): ResponseInterface
     {
-        return $this->writeJson($response, $this->resolve($request));
+        return $this->writeJson($response, $this, $this->getCode());
     }
 
     protected function wrapData(array $data): array
@@ -44,33 +39,25 @@ class JsonResource implements ResourceInterface, \ArrayAccess
         return $data;
     }
 
-    public function offsetExists(mixed $offset): bool
+    public function jsonSerialize(): array
     {
-        return isset($this->data[$offset]);
+        $data = $this->mapData();
+
+        if ($data instanceof JsonSerializable) {
+            $data = $data->jsonSerialize();
+        }
+
+        foreach ($data as $key => $value) {
+            if ($value instanceof ResourceInterface) {
+                $data[$key] = $value->jsonSerialize();
+            }
+        }
+
+        return $this->wrapData($data);
     }
 
-    public function offsetGet(mixed $offset): mixed
+    public function __toString(): string
     {
-        return $this->data[$offset];
-    }
-
-    public function offsetSet(mixed $offset, mixed $value): void
-    {
-        throw new \RuntimeException('Resource is read-only');
-    }
-
-    public function offsetUnset(mixed $offset): void
-    {
-        throw new \RuntimeException('Resource is read-only');
-    }
-
-    public function __isset($key)
-    {
-        return $this->offsetExists($key);
-    }
-
-    public function __get($key)
-    {
-        return $this->offsetGet($key);
+        return \json_encode($this->jsonSerialize(), \JSON_THROW_ON_ERROR);
     }
 }

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
+use App\Application\HTTP\Middleware\ErrorHandlerMiddleware;
 use App\Application\HTTP\Middleware\HandleRPCExceptionsMiddleware;
 use Spiral\Bootloader\Http\RouterBootloader;
 use Spiral\Bootloader\Http\RoutesBootloader as BaseRoutesBootloader;
 use Spiral\Filter\ValidationHandlerMiddleware;
-use Spiral\Http\Middleware\ErrorHandlerMiddleware;
 use Spiral\Http\Middleware\JsonPayloadMiddleware;
 use Spiral\Router\Bootloader\AnnotatedRoutesBootloader;
 use Spiral\Router\GroupRegistry;
@@ -25,7 +25,6 @@ final class RoutesBootloader extends BaseRoutesBootloader
         return [
             ErrorHandlerMiddleware::class,
             JsonPayloadMiddleware::class,
-            ValidationHandlerMiddleware::class,
         ];
     }
 
@@ -38,14 +37,13 @@ final class RoutesBootloader extends BaseRoutesBootloader
         ];
     }
 
-    /**
-     * Override this method to configure route groups
-     */
     protected function configureRouteGroups(GroupRegistry $groups): void
     {
         $groups
-            ->setDefaultGroup('api');
+            ->setDefaultGroup('api.v1');
 
-        $groups->getGroup('api')->setPrefix('/api')->setNamePrefix('api.');
+        $groups->getGroup('api.v1')
+            ->setPrefix('/api/v1')
+            ->setNamePrefix('api.v1.');
     }
 }

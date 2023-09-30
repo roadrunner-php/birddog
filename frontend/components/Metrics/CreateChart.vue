@@ -8,7 +8,7 @@
           <b-icon icon="plus"/>
           Create
         </b-button>
-        <b-button size="sm" variant="outline-danger" class="ml-2" @click="clear">
+        <b-button size="sm" variant="outline-danger" class="ms-2" @click="clear">
           <b-icon icon="x"/>
           Clear
         </b-button>
@@ -23,7 +23,7 @@
 
     <div class="card-body p-2 d-flex flex-wrap">
       <MetricsPartialsSelectableMetric
-        class="mr-2 mb-2"
+        class="me-2 mb-2"
         v-for="metric in metrics"
         :key="metric.name"
         :metric="metric"

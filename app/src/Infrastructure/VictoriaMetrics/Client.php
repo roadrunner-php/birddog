@@ -18,11 +18,11 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final class Client implements ClientInterface
+final readonly class Client implements ClientInterface
 {
     public function __construct(
-        private readonly HttpClientInterface $writeClient,
-        private readonly HttpClientInterface $queryClient,
+        private HttpClientInterface $writeClient,
+        private HttpClientInterface $queryClient,
     ) {
     }
 
@@ -108,7 +108,7 @@ final class Client implements ClientInterface
         $response = $this->send('GET', 'api/v1/query', $query);
 
         if (!isset($response['result'][0])) {
-            return null;
+            return [];
         }
 
         $points = [];

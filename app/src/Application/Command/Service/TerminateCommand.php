@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Application\Command\Service;
 
+use App\Application\Command\Service\DTO\TerminateResult;
 use Spiral\Cqrs\CommandInterface;
 
-final class TerminateCommand implements CommandInterface
+/**
+ * @implements CommandInterface<TerminateResult>
+ */
+final readonly class TerminateCommand implements CommandInterface
 {
     public function __construct(
-        public readonly string $server,
-        public readonly string $service,
+        public string $server,
+        public string $service,
     ) {
     }
 }

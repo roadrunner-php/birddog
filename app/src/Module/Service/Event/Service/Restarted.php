@@ -7,12 +7,11 @@ namespace App\Module\Service\Event\Service;
 use App\Application\Centrifuge\Channel\ServerChannel;
 use App\Application\Event\ShouldBroadcast;
 
-class Restarted implements ShouldBroadcast
+final readonly class Restarted implements ShouldBroadcast
 {
     public function __construct(
-        public readonly string $server,
-        public readonly string $service,
-        public readonly bool $status
+        public string $server,
+        public string $service
     ) {
     }
 
@@ -31,7 +30,6 @@ class Restarted implements ShouldBroadcast
         return [
             'server' => $this->server,
             'service' => $this->service,
-            'status' => $this->status,
         ];
     }
 }

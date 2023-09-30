@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace App\Application\Command\Service;
 
+use App\Application\Command\Service\DTO\CreateResult;
 use Spiral\Cqrs\CommandInterface;
 
-final class CreateCommand implements CommandInterface
+/**
+ * @implements CommandInterface<CreateResult>
+ */
+final readonly class CreateCommand implements CommandInterface
 {
     public function __construct(
-        public readonly string $server,
-        public readonly string $name,
-        public readonly string $command,
-        public readonly int $processNum = 1,
-        public readonly int $execTimeout = 0,
-        public readonly bool $remainAfterExit = false,
-        public readonly array $env = [],
-        public readonly int $restartSec = 30
+        public string $server,
+        public string $name,
+        public string $command,
+        public int $processNum = 1,
+        public int $execTimeout = 0,
+        public bool $remainAfterExit = false,
+        public array $env = [],
+        public int $restartSec = 30
     ) {
     }
 }

@@ -14,7 +14,7 @@
     </nav>
 
     <h4 class="d-flex align-items-center">
-      <b-icon icon="graph-up" font-scale="1.4" class="mr-3"/> Metrics dashboard
+      <b-icon icon="graph-up" font-scale="1.4" class="me-3"/> Metrics dashboard
     </h4>
 
     <MetricsDashboard :server="server" class="mt-4" />

@@ -10,7 +10,8 @@ export default {
   head: {
     title: 'Birddog',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'en',
+      'data-bs-theme': 'dark'
     },
     meta: [
       {charset: 'utf-8'},

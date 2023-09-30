@@ -12,7 +12,6 @@ export default {}
 
 <style type="text/css">
 body {
-  background-color: whitesmoke;
 }
 
 body, #__nuxt, #__layout, #__layout > main {

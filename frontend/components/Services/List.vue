@@ -5,8 +5,10 @@
         :name="name"
         :server="server"
         :key="name"
-        v-for="name in sortedServices" class="mb-4 shadow-sm"/>
+        v-for="name in sortedServices" class="mb-4 shadow-sm"
+      />
     </div>
+
     <UIWarningMessage v-else>
       There are no available services on <strong>{{ server }}</strong> server.
     </UIWarningMessage>

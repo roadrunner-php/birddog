@@ -5,25 +5,24 @@
     :variant="buttonVariant"
     size="sm"
   >
-          <template #button-content>
-            {{ metric.name }}
-          </template>
-
-          <b-dropdown-item
-            v-for="tag in metric.tags"
-            :variant="enabled(metric.name, tag) ? 'primary' : 'outline-primary'"
-            :key="`${metric.name}-${tag.name}-${tag.value}`"
-            @click="selectTag(metric.name, tag)"
-          >
-            {{ tag.name }}={{ tag.value }}
-          </b-dropdown-item>
-        </b-dropdown>
-   <b-button
-     @click="selectTag(metric.name)"
-     :variant="buttonVariant"
-     size="sm" v-else>
-     {{ metric.name }}
-   </b-button>
+    <template #button-content>
+      {{ metric.name }}
+    </template>
+    <b-dropdown-item
+      v-for="tag in metric.tags"
+      :variant="enabled(metric.name, tag) ? 'primary' : 'outline-primary'"
+      :key="`${metric.name}-${tag.name}-${tag.value}`"
+      @click="selectTag(metric.name, tag)"
+    >
+      {{ tag.name }}={{ tag.value }}
+    </b-dropdown-item>
+  </b-dropdown>
+  <b-button
+    @click="selectTag(metric.name)"
+    :variant="buttonVariant"
+    size="sm" v-else>
+   {{ metric.name }}
+  </b-button>
 </span>
 </template>
 

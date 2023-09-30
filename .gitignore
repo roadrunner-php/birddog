@@ -3,9 +3,13 @@ victoria-metrics-data
 vendor
 runtime
 rr*
+protoc-gen-php-grpc*
 centrifugo*
 influxd*
 spiral*
 .env
 .phpunit.result.cache
-composer.lock
+.phpunit.cache
+.deptrac.cache
+.phpunit.cache/
+

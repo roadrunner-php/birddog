@@ -41,6 +41,13 @@ const jobsPipelineResume = ({$axios}) => async (server, pipeline) => $axios.$pos
 })
   .then((response) => response.status)
 
+// Informer
+const addWorker = ({$axios}) => async (server, plugin) => $axios.$post(`/informer/worker`, {server, plugin})
+  .then((response) => response.status)
+
+const removeWorker = ({$axios}) => async (server, plugin) => $axios.$delete(`/informer/worker`, {server, plugin})
+  .then((response) => response.status)
+
 // Services
 const servicesList = ({$axios}) => async (server) => $axios.$get(`/services?server=${server}`)
   .then((response) => response.data.services)
@@ -81,5 +88,7 @@ export default {
   metricsGet,
   metricsGeByKey,
   settingsGet,
-  settingsStore
+  settingsStore,
+  addWorker,
+  removeWorker,
 }

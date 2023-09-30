@@ -12,6 +12,9 @@ return [
     'connections' => [
         'centrifugo' => [
             'driver' => 'centrifugo',
+        ],
+        'null' => [
+            'driver' => 'null',
         ]
     ],
 ];

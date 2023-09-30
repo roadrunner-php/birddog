@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Application\Command\Server;
 
+use App\Application\Command\Server\DTO\RegisterResult;
 use Spiral\Cqrs\CommandInterface;
 
-final class RegisterCommand implements CommandInterface
+/**
+ * @implements CommandInterface<RegisterResult>
+ */
+final readonly class RegisterCommand implements CommandInterface
 {
     public function __construct(
-        public readonly string $name,
-        public readonly string $address,
+        public string $name,
+        public string $address,
     ) {
     }
 }

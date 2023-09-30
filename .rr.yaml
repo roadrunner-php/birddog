@@ -1,4 +1,4 @@
-version: '2.7'
+version: '3'
 
 rpc:
     listen: tcp://127.0.0.1:6001
@@ -38,6 +38,7 @@ service:
         restart_sec: 1
         command: "npm run dev"
         env:
+            NODE_OPTIONS: --openssl-legacy-provider
             API_URL: http://127.0.0.1:8080
             WS_URL: ws://127.0.0.1:8080/connection/websocket
     centrifuge:
@@ -56,6 +57,11 @@ service:
         restart_sec: 1
         command: "php app.php take:snapshots --period=15"
 
+kv:
+    settings:
+        driver: memory
+        config: { }
+
 metrics:
     address: 127.0.0.1:2112
 
@@ -64,4 +70,4 @@ centrifuge:
     grpc_api_address: "tcp://127.0.0.1:10000"
     pool:
         reset_timeout: 10
-        num_workers: 2
+        num_workers: 4

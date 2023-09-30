@@ -15,8 +15,6 @@ export const mutations = {
       this.$ws.serverChannel(state.defaultServer).unsubscribe()
     }
 
-    this.$ws.serverChannel(server)
-
     state.defaultServer = server
 
     this.dispatch('config/fetchConfig', server)

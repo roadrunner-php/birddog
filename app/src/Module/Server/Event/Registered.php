@@ -7,11 +7,11 @@ namespace App\Module\Server\Event;
 use App\Application\Centrifuge\Channel\PublicChannel;
 use App\Application\Event\ShouldBroadcast;
 
-final class Registered implements ShouldBroadcast
+final readonly class Registered implements ShouldBroadcast
 {
     public function __construct(
-        public readonly string $name,
-        public readonly string $address
+        public string $name,
+        public string $address
     ) {
     }
 

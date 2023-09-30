@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace App\Application\HTTP\Response;
 
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
-interface ResourceInterface
+interface ResourceInterface extends \JsonSerializable, \Stringable
 {
-    public function resolve(ServerRequestInterface $request): array;
-
-    public function toResponse(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface;
+    public function toResponse(ResponseInterface $response): ResponseInterface;
 }

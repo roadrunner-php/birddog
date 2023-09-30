@@ -10,7 +10,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class HttpClientBootloader extends Bootloader
 {
-    protected const SINGLETONS = [
-        HttpClientInterface::class => NativeHttpClient::class,
-    ];
+    public function defineSingletons(): array
+    {
+        return [
+            HttpClientInterface::class => NativeHttpClient::class,
+        ];
+    }
 }

@@ -10,9 +10,12 @@ use Spiral\Boot\Bootloader\Bootloader;
 
 final class PrometheusParserBootloader extends Bootloader
 {
-    protected const SINGLETONS = [
-        Parser::class => [self::class, 'initParser'],
-    ];
+    public function defineSingletons(): array
+    {
+        return [
+            Parser::class => [self::class, 'initParser'],
+        ];
+    }
 
     private function initParser(): Parser
     {

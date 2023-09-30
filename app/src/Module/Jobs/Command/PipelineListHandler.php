@@ -4,46 +4,39 @@ declare(strict_types=1);
 
 namespace App\Module\Jobs\Command;
 
+use App\Application\Command\Jobs\DTO\PipelineListResult;
 use App\Application\Command\Jobs\PipelineListQuery;
-use App\Infrastructure\RPC\RPCManagerInterface;
-use App\Module\Jobs\Schema\PipelinesSchema;
+use App\Infrastructure\RoadRunner\RPC\RPCManagerInterface;
+use App\Module\Jobs\Command\DTO\Pipeline;
 use Spiral\Cqrs\Attribute\QueryHandler;
-use Spiral\DataGrid\GridInterface;
-use Spiral\RoadRunner\Jobs\Jobs;
-use Spiral\RoadRunner\Jobs\Queue;
 
-final class PipelineListHandler
+final readonly class PipelineListHandler
 {
     public function __construct(
-        private readonly RPCManagerInterface $rpc,
-        private readonly PipelinesSchema $schema,
+        private RPCManagerInterface $rpc,
     ) {
     }
 
     #[QueryHandler]
-    public function __invoke(PipelineListQuery $query): GridInterface
+    public function __invoke(PipelineListQuery $query): PipelineListResult
     {
-        $rpc = $this->rpc->getServer($query->server);
-        $jobs = new Jobs($rpc);
+        $pipelines = \array_map(
+            static fn(array $pipeline): Pipeline => new Pipeline(
+                pipeline: $pipeline['pipeline'],
+                driver: $pipeline['driver'],
+                queue: $pipeline['queue'],
+                priority: $pipeline['priority'],
+                active: $pipeline['active'],
+                delayed: $pipeline['delayed'],
+                reserved: $pipeline['reserved'],
+                ready: $pipeline['ready'],
+            ),
+            $this->rpc->connect($query->server)->queuePipelineList(),
+        );
 
-        $pipelines = [];
-
-        $queues = \iterator_to_array($jobs->getIterator());
-        foreach ($queues as $queue) {
-            /** @var Queue $queue */
-            $stat = $queue->getPipelineStat();
-
-            $pipelines[] = [
-                'name' => $stat->getPipeline(),
-                'driver' => $stat->getDriver(),
-                'priority' => $stat->getPriority(),
-                'active' => $stat->getActive(),
-                'delayed' => $stat->getDelayed(),
-                'reserved' => $stat->getReserved(),
-                'ready' => $stat->getReady(),
-            ];
-        }
-
-        return $this->schema->create($pipelines);
+        return new PipelineListResult(
+            server: $query->server,
+            pipelines: $pipelines,
+        );
     }
 }

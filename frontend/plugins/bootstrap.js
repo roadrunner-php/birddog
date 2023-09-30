@@ -5,7 +5,6 @@ Object.defineProperty(String.prototype, 'capitalize', {
   enumerable: false
 });
 
-
 export default function ({store}, inject) {
   store.dispatch('settings/fetchSettings')
   store.dispatch('servers/fetchServers')

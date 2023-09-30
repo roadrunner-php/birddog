@@ -10,7 +10,7 @@ use Spiral\Validator\Bootloader\ValidatorBootloader as BaseValidatorBootloader;
 
 final class ValidatorBootloader extends Bootloader
 {
-    public function boot(BaseValidatorBootloader $bootloader)
+    public function boot(BaseValidatorBootloader $bootloader): void
     {
         $bootloader->addChecker('custom', ValidationRules::class);
     }

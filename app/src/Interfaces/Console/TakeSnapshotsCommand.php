@@ -12,14 +12,20 @@ use App\Infrastructure\VictoriaMetrics\Payload\Tag;
 use Butschster\Prometheus\Ast\MetricDataNode;
 use Psr\Log\LoggerInterface;
 use RoadRunner\Logger\Logger as RoadRunnerLogger;
+use Spiral\Console\Attribute\AsCommand;
+use Spiral\Console\Attribute\Option;
 use Spiral\Console\Command;
 use Spiral\Cqrs\CommandBusInterface;
 use Spiral\Cqrs\QueryBusInterface;
 
+#[AsCommand(
+    name: 'take:snapshots',
+    description: 'Take snapshots of prometheus metrics for all RoadRunner instances'
+)]
 final class TakeSnapshotsCommand extends Command
 {
-    protected const SIGNATURE = 'take:snapshots {--period=5}';
-    protected const DESCRIPTION = 'Take snapshots of prometheus metrics for all RoadRunner instances';
+    #[Option(description: 'Period of taking snapshots in seconds')]
+    public int $period = 5;
 
     public function __invoke(
         QueryBusInterface $queryBus,
@@ -29,7 +35,7 @@ final class TakeSnapshotsCommand extends Command
     ): int {
         while (true) {
             $servers = $queryBus->ask(new ListQuery());
-            $period = (int)$this->option('period') ?? 5;
+            $period = $this->period;
 
             \assert($period >= 5);
 
@@ -37,7 +43,7 @@ final class TakeSnapshotsCommand extends Command
                 $points = [];
 
                 /** @var array<non-empty-string, MetricDataNode> $metrics */
-                $metrics = $queryBus->ask(new GetMetricsQuery($server->getName()));
+                $metrics = $queryBus->ask(new GetMetricsQuery($server->name));
 
                 foreach ($metrics as $key => $metricNode) {
                     foreach ($metricNode->metrics as $metric) {
@@ -46,7 +52,7 @@ final class TakeSnapshotsCommand extends Command
                             $metric->value,
                         );
 
-                        $point->addTag(new Tag('server', $server->getName()));
+                        $point->addTag(new Tag('server', $server->name));
                         $point->addTag(new Tag('type', $metricNode->type));
 
                         foreach ($metric->labels as $label) {

@@ -6,13 +6,13 @@ namespace App\Application\Command\Metrics;
 
 use Spiral\Cqrs\QueryInterface;
 
-final class GetByKeyQuery implements QueryInterface
+final readonly class GetByKeyQuery implements QueryInterface
 {
     public function __construct(
-        public readonly string $server,
-        public readonly string $key,
-        public readonly array $tags = [],
-        public readonly ?string $step = '1m'
+        public string $server,
+        public string $key,
+        public array $tags = [],
+        public ?string $step = '1m'
     ) {
     }
 }

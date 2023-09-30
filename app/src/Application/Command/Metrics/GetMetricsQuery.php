@@ -6,10 +6,10 @@ namespace App\Application\Command\Metrics;
 
 use Spiral\Cqrs\QueryInterface;
 
-final class GetMetricsQuery implements QueryInterface
+final readonly class GetMetricsQuery implements QueryInterface
 {
     public function __construct(
-        public readonly string $server
+        public string $server
     ) {
     }
 }

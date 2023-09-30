@@ -1,5 +1,10 @@
 <template>
-  <Loading :active="active" :height="30" :is-full-page="false"/>
+  <Loading
+    :active="active"
+    :height="30"
+    background-color="#212529"
+    :is-full-page="false"
+  />
 </template>
 
 <script>

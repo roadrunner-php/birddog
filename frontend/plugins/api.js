@@ -54,6 +54,13 @@ export default function (ctx, inject) {
         store: apiMethods.settingsStore(ctx),
       }
     }
+
+    get informer() {
+      return {
+        addWorker: apiMethods.addWorker(ctx),
+        removeWorker: apiMethods.removeWorker(ctx),
+      }
+    }
   }
 
   inject('api', api)

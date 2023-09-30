@@ -14,7 +14,7 @@
     </nav>
 
     <h4 class="d-flex align-items-center">
-      <b-icon icon="braces" font-scale="1.4" class="mr-3"/>
+      <b-icon icon="braces" font-scale="1.4" class="me-3"/>
       Server config
     </h4>
 

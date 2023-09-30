@@ -18,9 +18,9 @@ const refreshPeriodically = ($api, commit, server) => {
   Promise.all([
     fetchData($api, commit, server),
   ]).then(() => {
-    timeout = setTimeout(() => {
-      refreshPeriodically($api, commit, server);
-    }, 5000);
+    // timeout = setTimeout(() => {
+    //   refreshPeriodically($api, commit, server);
+    // }, 5000);
   });
 }
 

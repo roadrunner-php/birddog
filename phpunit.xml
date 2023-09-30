@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         backupGlobals="false"
+         colors="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         stopOnError="false"
+         stderr="true"
+         cacheDirectory=".phpunit.cache"
+         backupStaticProperties="false"
+>
+    <coverage/>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">tests/Feature</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">app/src</directory>
+        </include>
+    </source>
+    <php>
+        <env name="APP_ENV" value="testing" />
+        <env name="BROADCAST_CONNECTION" value="null" />
+        <env name="CACHE_STORAGE" value="local" />
+        <env name="TOKENIZER_CACHE_TARGETS" value="true" />
+        <env name="TELEMETRY_DRIVER" value="null" />
+        <env name="VERBOSITY_LEVEL" value="basic" />
+        <ini name="error_reporting" value="-1"/>
+        <ini name="memory_limit" value="-1"/>
+    </php>
+</phpunit>

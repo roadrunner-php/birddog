@@ -9,7 +9,7 @@ use RoadRunner\Centrifugo\Request;
 use RoadRunner\Centrifugo\Request\RequestInterface;
 use Spiral\RoadRunnerBridge\Centrifugo\ServiceInterface;
 
-final class SubscribeService implements ServiceInterface
+final readonly class SubscribeService implements ServiceInterface
 {
     /**
      * @param Request\Subscribe $request

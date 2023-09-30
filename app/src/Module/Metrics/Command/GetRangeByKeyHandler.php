@@ -9,10 +9,10 @@ use App\Infrastructure\VictoriaMetrics\ClientInterface;
 use App\Infrastructure\VictoriaMetrics\Payload\Tag;
 use Spiral\Cqrs\Attribute\QueryHandler;
 
-final class GetRangeByKeyHandler
+final readonly class GetRangeByKeyHandler
 {
     public function __construct(
-        private readonly ClientInterface $client
+        private ClientInterface $client
     ) {
     }
 

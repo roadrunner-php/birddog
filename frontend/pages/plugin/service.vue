@@ -14,7 +14,7 @@
     </nav>
 
     <h4 class="mb-4 d-flex align-items-center">
-      <b-icon icon="puzzle" font-scale="1.4" class="mr-3"/> Service plugin
+      <b-icon icon="puzzle" font-scale="1.4" class="me-3"/> Service plugin
     </h4>
 
     <ServicesList :server="server" />

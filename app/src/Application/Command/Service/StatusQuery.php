@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Application\Command\Service;
 
+use App\Application\Command\Service\DTO\StatusResult;
 use Spiral\Cqrs\QueryInterface;
 
-final class StatusQuery implements QueryInterface
+/**
+ * @implements QueryInterface<StatusResult>
+ */
+final readonly class StatusQuery implements QueryInterface
 {
     public function __construct(
-        public readonly string $server,
-        public readonly string $service,
+        public string $server,
+        public string $service,
     ) {
     }
 }

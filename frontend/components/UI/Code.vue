@@ -1,7 +1,7 @@
 <template>
   <pre class="m-0"><code
     v-highlight
-    class="p-4"
+    class="p-4  bg-dark"
     :class="lang"
     v-text="code"
   /></pre>

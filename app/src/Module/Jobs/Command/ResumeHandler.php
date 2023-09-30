@@ -4,24 +4,35 @@ declare(strict_types=1);
 
 namespace App\Module\Jobs\Command;
 
+use App\Application\Command\Jobs\DTO\ResumeResult;
 use App\Application\Command\Jobs\ResumeCommand;
-use App\Infrastructure\RPC\RPCManagerInterface;
+use App\Infrastructure\RoadRunner\RPC\RPCManagerInterface;
 use Spiral\Cqrs\Attribute\CommandHandler;
-use Spiral\RoadRunner\Jobs\Jobs;
+use Spiral\Exceptions\ExceptionReporterInterface;
 
-final class ResumeHandler
+final readonly class ResumeHandler
 {
     public function __construct(
-        private readonly RPCManagerInterface $rpc,
+        private RPCManagerInterface $rpc,
+        private ExceptionReporterInterface $reporter,
     ) {
     }
 
     #[CommandHandler]
-    public function __invoke(ResumeCommand $command): void
+    public function __invoke(ResumeCommand $command): ResumeResult
     {
-        $rpc = $this->rpc->getServer($command->server);
-        $jobs = new Jobs($rpc);
+        try {
+            $this->rpc->connect($command->server)->resumeQueuePipeline($command->pipeline);
+            $status = true;
+        } catch (\Throwable $e) {
+            $this->reporter->report($e);
+            $status = false;
+        }
 
-        $jobs->resume($command->pipeline);
+        return new ResumeResult(
+            server: $command->server,
+            pipeline: $command->pipeline,
+            status: $status,
+        );
     }
 }

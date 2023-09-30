@@ -12,11 +12,11 @@ use Spiral\Filters\Exception\ValidationException;
 use Spiral\Http\Http;
 use Spiral\RoadRunnerBridge\Centrifugo\ServiceInterface;
 
-final class RPCService implements ServiceInterface
+final readonly class RPCService implements ServiceInterface
 {
     public function __construct(
-        private readonly Http $http,
-        private readonly ServerRequestFactoryInterface $requestFactory,
+        private Http $http,
+        private ServerRequestFactoryInterface $requestFactory,
     ) {
     }
 
@@ -65,7 +65,7 @@ final class RPCService implements ServiceInterface
 //        }
 
         return match ($method) {
-            'GET', 'HEAD' => $httpRequest->withQueryParams($request->getData()),
+            'GET', 'HEAD',
             'POST', 'PUT', 'DELETE' => $httpRequest->withParsedBody($request->getData()),
             default => throw new \InvalidArgumentException('Unsupported method'),
         };

@@ -1,14 +1,11 @@
 <template>
   <div class="d-flex flex-column flex-shrink-0">
-
     <MetricsItem :server="server"
                  v-for="metrics in enabledMetrics"
                  :metric="metrics"
                  :key="metrics.id"
-                 class="mb-4" />
-
-    <MetricsCreateChart :server="server" />
-
+                 class="mb-4"/>
+    <MetricsCreateChart :server="server"/>
   </div>
 </template>
 
@@ -24,8 +21,6 @@ export default {
   }
 }
 </script>
-
-
 <style type="text/css">
 .overflow-scroll {
   overflow-y: scroll;

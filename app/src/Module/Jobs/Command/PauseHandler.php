@@ -4,24 +4,35 @@ declare(strict_types=1);
 
 namespace App\Module\Jobs\Command;
 
+use App\Application\Command\Jobs\DTO\PauseResult;
 use App\Application\Command\Jobs\PauseCommand;
-use App\Infrastructure\RPC\RPCManagerInterface;
+use App\Infrastructure\RoadRunner\RPC\RPCManagerInterface;
 use Spiral\Cqrs\Attribute\CommandHandler;
-use Spiral\RoadRunner\Jobs\Jobs;
+use Spiral\Exceptions\ExceptionReporterInterface;
 
-final class PauseHandler
+final readonly class PauseHandler
 {
     public function __construct(
-        private readonly RPCManagerInterface $rpc,
+        private RPCManagerInterface $rpc,
+        private ExceptionReporterInterface $reporter,
     ) {
     }
 
     #[CommandHandler]
-    public function __invoke(PauseCommand $command): void
+    public function __invoke(PauseCommand $command): PauseResult
     {
-        $rpc = $this->rpc->getServer($command->server);
-        $jobs = new Jobs($rpc);
+        try {
+            $this->rpc->connect($command->server)->pauseQueuePipeline($command->pipeline);
+            $status = true;
+        } catch (\Throwable $e) {
+            $this->reporter->report($e);
+            $status = false;
+        }
 
-        $jobs->pause($command->pipeline);
+        return new PauseResult(
+            server: $command->server,
+            pipeline: $command->pipeline,
+            status: $status,
+        );
     }
 }
