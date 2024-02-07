@@ -1,7 +1,7 @@
 # Birddog
 
-Birddog is a free tool for monitoring [workers](https://roadrunner.dev/docs/php-rpc/2.x/en), services
-and [jobs](https://roadrunner.dev/docs/plugins-jobs/2.x/en) of a RoadRunner instance.
+Birddog is a free tool for monitoring [workers](https://docs.roadrunner.dev/php-worker/rpc), services
+and [jobs](https://docs.roadrunner.dev/queues-and-jobs/overview-queues) of a RoadRunner instance.
 
 ![birddog-plugins](https://user-images.githubusercontent.com/773481/200691160-314cc757-89b7-46ec-b55a-6b1b2788087b.png)
 ![birddog-config](https://user-images.githubusercontent.com/773481/200691269-9383b752-0b6e-448a-aa6a-020936aeb1e5.png)
